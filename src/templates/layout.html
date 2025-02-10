@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" x-data x-cloak>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Grow Earth - Green Your Space, a platform to green your environment." />
+  <meta name="keywords" content="Grow Earth, Green, Environment, Plants, Gardening" />
+  <title>{% block title %}Grow Earth - Green Your Space{% endblock %}</title>
+  <link rel="icon" type="image/ico" href="{% static 'favicon.ico' %}" />
+
+  <!-- Our project just needs Font Awesome Free's Solid and Brand files -->
+  <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}" />
+
+  <!-- Alpine.js -->
+  <script defer src="{% static 'js/alpine.min.js' %}"></script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
+
+  <!-- Custom Scripts -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+
+  {% block extra_head %}{% endblock %}
+
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-gray-50" x-data="mainApp()">
+  
+  {% include 'components/header.html' %}
+
+  <main class="flex-grow">
+    {% block content %}
+    <div class="text-center">
+      <p>Default Content</p>
+    </div>
+    {% endblock %}
+  </main>
+
+  {% include 'components/footer.html' %}
+
+  {% block scripts %}{% endblock %}
+
+  {% include 'components/message_block.html' %}
+
+  <script>
+    function mainApp() {
+      return {
+        // Global Alpine.js data and methods
+        init() {
+          // Initialize global app logic
+          console.log('App Initialized');
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

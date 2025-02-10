@@ -1,0 +1,159 @@
+{% extends '../layout.html' %}
+{% load static %}
+
+{% block title %}Grow Earth - Ultimate Plant Ecosystem Platform{% endblock %}
+
+{% block content %}
+<div class="bg-white">
+  <!-- Hero Section -->
+  <section class="bg-primary/10 py-16 md:py-24">
+    <div class="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold text-secondary mb-6 leading-tight">
+          Cultivating Green Futures, One Plant at a Time
+        </h1>
+        <p class="text-lg text-darkBrown mb-8">
+          Discover a sustainable ecosystem where plants thrive and communities grow. Your journey to green living starts
+          here.
+        </p>
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <a href="{% url 'store:catalog' %}" class="
+            bg-secondary 
+            text-white 
+            px-6 py-3 
+            rounded-full 
+            hover:bg-secondary/90 
+            transition 
+            duration-300 
+            text-center
+          ">
+            Explore Plant Catalog
+          </a>
+          <a href="{% url 'core:consultation' %}" class="
+            border-2 
+            border-secondary 
+            text-secondary 
+            px-6 py-3 
+            rounded-full 
+            hover:bg-secondary/10 
+            transition 
+            duration-300 
+            text-center
+          ">
+            Expert Consultation
+          </a>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-6">
+        <img src="{% static 'images/buldinginplant.png' %}" class="
+            rounded-xl 
+            shadow-lg 
+            object-cover 
+            transform 
+            hover:scale-105 
+            transition 
+            duration-300
+          " alt="Urban Green Space" />
+        <img src="{% static 'images/biglivse.png' %}" class="
+            rounded-xl 
+            shadow-lg 
+            object-cover 
+            transform 
+            hover:scale-105 
+            transition 
+            duration-300
+          " alt="Sustainable Living" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Plant Categories -->
+  <section class="container mx-auto py-16 px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">
+        Our Plant Collections
+      </h2>
+      <p class="text-lg text-darkBrown">
+        Curated Selections for Every Green Space
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {% for category in plant_categories %}
+      <div class="
+        bg-white 
+        p-8 
+        rounded-xl 
+        shadow-md 
+        hover:shadow-xl 
+        transition 
+        duration-300 
+        border-t-4 
+        border-primary
+      ">
+        <h3 class="text-2xl font-semibold text-secondary mb-4">
+          {{ category.name }}
+        </h3>
+        <p class="text-darkBrown">{{ category.description }}</p>
+        <a href="{{ category.link }}" class="
+          mt-4 
+          inline-block 
+          text-primary 
+          hover:text-secondary 
+          transition 
+          duration-300
+        ">
+          Explore →
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Consultation CTA -->
+  <section class="bg-tertiary/10 py-16">
+    <div class="container mx-auto px-4">
+      <div class="
+        bg-white 
+        rounded-xl 
+        shadow-lg 
+        p-10 
+        md:p-16 
+        text-center
+      ">
+        <h2 class="
+          text-3xl 
+          md:text-4xl 
+          font-bold 
+          text-secondary 
+          mb-6
+        ">
+          Need Plant Advice?
+        </h2>
+        <p class="
+          text-lg 
+          text-darkBrown 
+          mb-8 
+          max-w-2xl 
+          mx-auto
+        ">
+          Connect with our plant experts for personalized guidance on creating your perfect green environment.
+        </p>
+        <a href="{% url 'core:consultation' %}" class="
+          bg-primary 
+          text-white 
+          px-8 
+          py-4 
+          rounded-full 
+          hover:bg-primary/90 
+          transition 
+          duration-300 
+          inline-block
+        ">
+          Book Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

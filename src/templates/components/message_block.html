@@ -1,0 +1,37 @@
+{% if messages %}
+<div id="message-container" class="fixed bottom-4 right-4 z-50 space-y-2">
+  {% for message in messages %}
+  <div
+    class="message-alert {% if message.extra_tags == 'alert-success' %}bg-green-500{% endif %} {% if message.extra_tags == 'alert-danger' %}bg-red-500{% endif %} {% if message.extra_tags == 'alert-warning' %}bg-yellow-500{% endif %} {% if message.extra_tags == 'alert-info' %}bg-blue-500{% endif %} text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out opacity-0 translate-x-full"
+    role="alert">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        {% if message.extra_tags == 'alert-success' %}
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {% elif message.extra_tags == 'alert-danger' %}
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {% elif message.extra_tags == 'alert-warning' %}
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {% elif message.extra_tags == 'alert-info' %}
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13.875 18.825A7.5 7.5 0 119.375 5.175m3.75-.675V12m0 .5h-.01"></path>
+        </svg>
+        {% endif %}
+        <span class="font-semibold">{{ message }}</span>
+      </div>
+      <button type="button" class="ml-4 close-message hover:bg-opacity-25 hover:bg-white rounded px-2">&times;</button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

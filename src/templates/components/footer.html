@@ -1,0 +1,214 @@
+{% load static i18n %}
+
+<footer class="bg-secondary text-white pt-16 relative overflow-hidden">
+  <!-- Background Overlay -->
+  <div class="absolute inset-0 opacity-10">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-full">
+      <path fill="#A2A915" fill-opacity="0.3"
+        d="M0,160L48,176C96,192,192,224,288,229.3C384,235,480,213,576,186.7C672,160,768,128,864,133.3C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320L192,320L96,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+
+  <div class="container mx-auto grid md:grid-cols-4 gap-8 px-4 relative z-10">
+    <!-- Brand Section -->
+    <div class="space-y-6">
+      <div class="flex items-center space-x-4">
+        <img src="{% static 'growearth-logo.svg' %}" alt="{{ company_details.name }} Logo"
+          class="h-16 w-16 transform transition hover:rotate-6" />
+        <h3 class="text-3xl font-bold text-saffron tracking-wide">
+          {{ company_details.name }}
+        </h3>
+      </div>
+      <p class="text-white/80 leading-relaxed text-sm">
+        {{ company_details.mission }}
+      </p>
+
+      <!-- Social Links -->
+      <div class="flex space-x-4">
+        {% for social in social_links %}
+        <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ social.aria_label }}" class="
+              w-12 h-12 
+              rounded-full 
+              bg-primary/20 
+              flex items-center justify-center 
+              {{ social.color }}
+              hover:bg-saffron/30 
+              transform 
+              hover:scale-110 
+              transition 
+              duration-300 
+              shadow-md
+            ">
+          <i class="fab {{ social.icon }} text-xl"></i>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-xl font-semibold mb-6 pb-3 text-saffron border-b-2 border-primary/40">
+        {% trans "Quick Links" %}
+      </h4>
+      <ul class="space-y-3">
+        {% for link in footer_sections.quick_links %}
+        <li>
+          <a href="{% url link.url %}" class="
+                text-white/80 
+                text-sm 
+                hover:text-saffron 
+                hover:pl-3 
+                transition-all 
+                duration-300 
+                inline-block 
+                relative 
+                group
+              ">
+            <span class="
+                absolute 
+                left-0 
+                top-1/2 
+                transform 
+                -translate-y-1/2 
+                w-2 
+                h-2 
+                bg-primary 
+                rounded-full 
+                opacity-0 
+                group-hover:opacity-100 
+                transition-opacity
+              "></span>
+            {{ link.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Support Links -->
+    <div>
+      <h4 class="text-xl font-semibold mb-6 pb-3 text-saffron border-b-2 border-primary/40">
+        {% trans "Customer Support" %}
+      </h4>
+      <ul class="space-y-3">
+        {% for link in footer_sections.support_links %}
+        <li>
+          <a href="{% url link.url %}" class="
+                text-white/80 
+                text-sm 
+                hover:text-saffron 
+                hover:pl-3 
+                transition-all 
+                duration-300 
+                inline-block 
+                relative 
+                group
+              ">
+            <span class="
+                absolute 
+                left-0 
+                top-1/2 
+                transform 
+                -translate-y-1/2 
+                w-2 
+                h-2 
+                bg-primary 
+                rounded-full 
+                opacity-0 
+                group-hover:opacity-100 
+                transition-opacity
+              "></span>
+            {{ link.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div>
+      <h4 class="text-xl font-semibold mb-6 pb-3 text-saffron border-b-2 border-primary/40">
+        {% trans "Stay Connected" %}
+      </h4>
+      <form class="space-y-4">
+        <div class="relative">
+          <input type="email" placeholder="{% trans 'Your email for plant updates' %}" class="
+              w-full 
+              p-3 
+              pl-4 
+              pr-10 
+              rounded-full 
+              bg-primary/10 
+              text-white 
+              placeholder-white/50 
+              focus:outline-none 
+              focus:ring-2 
+              focus:ring-saffron
+              text-sm
+            " />
+          <span class="
+            absolute 
+            right-4 
+            top-1/2 
+            transform 
+            -translate-y-1/2 
+            text-white/50
+          ">
+            <i class="fas fa-leaf"></i>
+          </span>
+        </div>
+        <button type="submit" class="
+            w-full 
+            bg-saffron 
+            text-secondary 
+            p-3 
+            rounded-full 
+            hover:bg-saffron/90 
+            transition 
+            duration-300 
+            text-sm 
+            font-semibold 
+            uppercase 
+            tracking-wider
+            group
+            flex 
+            items-center 
+            justify-center
+            space-x-2
+          ">
+          <span>{% trans "Subscribe" %}</span>
+          <i class="fas fa-seedling transform group-hover:scale-110 transition"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Copyright Section -->
+  <div class="bg-darkBrown py-5 mt-8 relative z-10">
+    <div class="container mx-auto text-center">
+      <p class="text-white/70 text-sm tracking-wider">
+        &copy; {% now "Y" %} {{ company_details.name }}.
+        {{ company_details.tagline }}
+        <a href="#" class="
+            ml-4 
+            hover:text-saffron 
+            transition 
+            duration-300 
+            inline-block
+          ">
+          {% trans "Privacy Policy" %}
+        </a>
+        <a href="#" class="
+            ml-4 
+            hover:text-saffron 
+            transition 
+            duration-300 
+            inline-block
+          ">
+          {% trans "Terms of Service" %}
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,60 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.uv/
+uv.lock
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Sensitive Information
+.env
+*.env
+!.env.example
+
+# Media and User-Uploaded Content
+src/media/
+
+# Static Files
+src/static/css/tailwind.css
+src/static/dist/
+
+# Tailwind CSS
+tailwind.config.js.bak
+
+# Jinja2 Compiled Templates
+*.py[co]
+
+# Development and IDE
+.vscode/
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Logs, Databases and Backups
+logs/
+*.sqlite3
+database_backups/
+
+# Build and Distribution
+dist/
+build/
+*.egg-info/
+
+# Testing
+.coverage
+.pytest_cache/
+
+# Temporary Files
+*.tmp
+*~
+
+# not used
+src/.gitignore

@@ -1,0 +1,269 @@
+{% load static %}
+
+<!-- <header class="bg-primary text-white shadow-md relative z-50"> -->
+<header class="bg-primary text-white shadow-md relative z-50">
+  <nav class="container mx-auto flex justify-between items-center py-2 px-6" aria-label="Main Navigation">
+    <!-- Logo Section -->
+    <div class="flex items-center space-x-3" aria-label="Grow Earth Home">
+      <img src="{% static 'growearth-logo.svg' %}" alt="Grow Earth Logo" class="h-10 w-10" width="40" height="40"
+        loading="lazy" />
+      <a href="{% url 'core:home' %}" class="text-2xl font-medium hover:text-secondary transition duration-300">
+        Grow Earth
+      </a>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <div class="hidden md:flex items-center space-x-6 ml-auto">
+      {% for link in navigation_links %}
+      {% if link.type == "single" %}
+      <a href="{% url link.url %}"
+        class="text-lg hover:text-secondary transition duration-300 flex items-center space-x-2 {% if link.active %}text-saffron font-bold{% endif %}"
+        aria-current="{% if link.active %}page{% else %}false{% endif %}">
+        {{ link.name }}
+      </a>
+      {% elif link.type == "dropdown" %}
+      <div class="relative">
+        <button class="text-lg hover:text-secondary transition duration-300 flex items-center space-x-2">
+          {{ link.name }}
+          <i class="fas fa-caret-down"></i>
+        </button>
+        <div
+          class="absolute left-0 mt-2 w-48 bg-white text-secondary rounded-lg shadow-lg overflow-hidden z-50 border border-gray-100">
+          {% for category in link.categories %}
+          <a href="{% url category.url %}" class="block px-4 py-3 hover:bg-primary/10 transition duration-300">
+            <i class="fas {{ category.icon }}"></i>
+            <span>{{ category.name }}</span>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+      <!-- Authentication Links Section -->
+      <div class="flex items-center space-x-4">
+        {% if user.is_authenticated %}
+        <!-- User Profile Dropdown with Refined Design -->
+        <div x-data="{ open: false }" class="relative">
+          <button @click="open = !open"
+            class="flex items-center gap-2 px-3 py-2 bg-secondary/10 rounded-full text-white hover:bg-secondary/20 transition-all duration-300 group">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 bg-saffron/30 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-white text-sm"></i>
+              </div>
+              <span class="font-medium text-sm">{{ user.username|default:'Profile' }}</span>
+            </div>
+            <svg class="w-4 h-4 transform transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Dropdown Menu with Modern Design -->
+          <div x-show="open" x-transition @click.away="open = false"
+            class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50">
+            <div class="py-2">
+              <!-- Profile Option -->
+              <a href="{% url auth_links.profile.url %}"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-primary/5 transition-colors group">
+                <div
+                  class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20">
+                  <i class="fas {{ auth_links.profile.icon }} text-primary text-xs"></i>
+                </div>
+                <span class="text-sm text-secondary">{{ auth_links.profile.label }}</span>
+              </a>
+
+              <!-- Logout Option -->
+              <a href="{% url auth_links.logout.url %}"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-colors group text-red-600">
+                <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200">
+                  <i class="fas {{ auth_links.logout.icon }} text-xs"></i>
+                </div>
+                <span class="text-sm">{{ auth_links.logout.label }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <!-- Login and Register Buttons with Enhanced Design -->
+        <div class="flex items-center gap-3">
+          <!-- Login Button -->
+          <a href="{% url auth_links.login.url %}"
+            class="flex items-center gap-2 px-4 py-2 bg-secondary/10 text-white rounded-full hover:bg-secondary/20 transition-all group">
+            <div
+              class="w-6 h-6 bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30">
+              <i class="fas {{ auth_links.login.icon }} text-xs"></i>
+            </div>
+            <span class="text-sm font-medium">{{ auth_links.login.label }}</span>
+          </a>
+
+          <!-- Register Button -->
+          <a href="{% url auth_links.register.url %}"
+            class="flex items-center gap-2 px-4 py-2 border border-saffron/50 text-saffron rounded-full hover:bg-saffron/10 transition-all group">
+            <div class="w-6 h-6 bg-saffron/10 rounded-full flex items-center justify-center group-hover:bg-saffron/20">
+              <i class="fas {{ auth_links.register.icon }} text-xs"></i>
+            </div>
+            <span class="text-sm font-medium">{{ auth_links.register.label }}</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <!-- Mobile Toggle Button -->
+     <!-- working but not change open to close and close to open i wont to apply that withminimal design -->
+    <div class="md:hidden">
+      <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
+        aria-expanded="false"
+        class="text-white focus:outline-none p-1 hover:bg-black hover:bg-opacity-15 rounded-sm text-xl text-center">
+        &#9776;
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Overlay -->
+  <div id="mobileNavLinks"
+    class="max-h-0 flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ease-in-out bg-primary p-6 rounded-md w-full max-w-md absolute left-1/2 transform -translate-x-1/2 top-[-100%] z-50">
+    <div class="container mx-auto px-2 py-4 w-full">
+      <!-- Mobile Navigation Links -->
+      <div class="flex flex-col space-y-6">
+        {% for link in navigation_links %}
+        {% if link.type == "single" %}
+        <a href="{% url link.url %}"
+          class="group relative text-[1.1rem] text-white/90 hover:text-saffron transition-all duration-300 transform hover:translate-x-2 flex items-center justify-between {% if link.active %}text-saffron font-bold{% endif %}">
+          <span class="tracking-wide">{{ link.name }}</span>
+          <i
+            class="fas fa-chevron-right text-base opacity-0 group-hover:opacity-100 group-hover:text-saffron transition-all duration-300"></i>
+        </a>
+        {% elif link.type == "dropdown" %}
+        <div class="relative group">
+          <button
+            class="w-full text-[1.1rem] text-white/90 hover:text-saffron transition-all duration-300 flex items-center justify-between">
+            <span class="tracking-wide">{{ link.name }}</span>
+            <i class="fas fa-caret-down transform transition-transform duration-300 group-hover:rotate-180"></i>
+          </button>
+          <div
+            class="mt-2 space-y-4 pl-4 text-white/80 max-h-0 overflow-hidden group-hover:max-h-screen transition-all duration-500 ease-in-out">
+            {% for category in link.categories %}
+            <a href="{% url category.url %}"
+              class="flex items-center justify-between py-2.5 text-base hover:text-saffron transition-all duration-300 transform hover:translate-x-2">
+              <div class="flex items-center space-x-4">
+                <i
+                  class="fas {{ category.icon }} text-lg w-6 transform transition-transform duration-300 group-hover:rotate-6"></i>
+                <span class="tracking-wide">{{ category.name }}</span>
+              </div>
+              <i
+                class="fas fa-chevron-right text-base opacity-0 group-hover:opacity-50 transition-all duration-300"></i>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Mobile Authentication Section -->
+      <div class="mt-10 space-y-5">
+        {% if user.is_authenticated %}
+        <!-- User Profile Overview -->
+        <div
+          class="bg-secondary/20 rounded-2xl p-4 flex items-center justify-between mb-5 hover:bg-secondary/30 transition-all duration-300">
+          <div class="flex items-center space-x-4">
+            <div
+              class="w-11 h-11 bg-saffron/30 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+              <i class="fas fa-user text-white text-lg"></i>
+            </div>
+            <span class="text-white font-semibold text-base tracking-wide">{{ user.username }}</span>
+          </div>
+        </div>
+
+        <!-- Profile Button -->
+        <a href="{% url auth_links.profile.url %}"
+          class="w-full text-center bg-secondary/10 text-white py-4 rounded-full flex items-center justify-center space-x-4 hover:bg-secondary/20 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+          <div
+            class="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transform transition-transform duration-300 group-hover:rotate-12">
+            <i class="fas {{ auth_links.profile.icon }} text-base"></i>
+          </div>
+          <span class="text-base font-medium tracking-wide">{{ auth_links.profile.label }}</span>
+        </a>
+
+        <!-- Logout Button -->
+        <a href="{% url auth_links.logout.url %}"
+          class="w-full text-center bg-red-500/10 text-red-300 py-4 rounded-full flex items-center justify-center space-x-4 hover:bg-red-500/20 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+          <div
+            class="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center group-hover:bg-red-500/30 transform transition-transform duration-300 group-hover:rotate-12">
+            <i class="fas {{ auth_links.logout.icon }} text-base"></i>
+          </div>
+          <span class="text-base font-medium tracking-wide">{{ auth_links.logout.label }}</span>
+        </a>
+        {% else %}
+        <!-- Login Button -->
+        <a href="{% url auth_links.login.url %}"
+          class="w-full text-center bg-secondary/10 text-white py-4 rounded-full flex items-center justify-center space-x-4 hover:bg-secondary/20 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+          <div
+            class="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transform transition-transform duration-300 group-hover:rotate-12">
+            <i class="fas {{ auth_links.login.icon }} text-base"></i>
+          </div>
+          <span class="text-base font-medium tracking-wide">{{ auth_links.login.label }}</span>
+        </a>
+
+        <!-- Register Button -->
+        <a href="{% url auth_links.register.url %}"
+          class="w-full text-center border border-saffron/50 text-saffron py-4 rounded-full flex items-center justify-center space-x-4 hover:bg-saffron/10 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+          <div
+            class="w-8 h-8 bg-saffron/10 rounded-full flex items-center justify-center group-hover:bg-saffron/20 transform transition-transform duration-300 group-hover:rotate-12">
+            <i class="fas {{ auth_links.register.icon }} text-base"></i>
+          </div>
+          <span class="text-base font-medium tracking-wide">{{ auth_links.register.label }}</span>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("toggleButton");
+    const mobileNavLinks = document.getElementById("mobileNavLinks");
+
+    toggleButton.addEventListener("click", function () {
+      // Toggle the mobile navigation links
+      if (mobileNavLinks.classList.contains("max-h-0")) {
+        mobileNavLinks.classList.remove("max-h-0");
+        mobileNavLinks.classList.add("max-h-screen", "top-[120%]"); // Move down to below header
+      } else {
+        mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+        mobileNavLinks.classList.add("max-h-0", "top-[-100%]"); // Move back up completely out of view
+      }
+    });
+
+    // Close the mobile navigation links when clicking outside
+    document.addEventListener("click", function (event) {
+      const isClickInside =
+        mobileNavLinks.contains(event.target) ||
+        toggleButton.contains(event.target);
+
+      if (!isClickInside) {
+        // Close the menu if it's open
+        if (!mobileNavLinks.classList.contains("max-h-0")) {
+          mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+          mobileNavLinks.classList.add("max-h-0", "top-[-100%]"); // Move back up completely out of view
+        }
+      }
+    });
+  });
+
+  function mobileNavigation() {
+    return {
+      isOpen: false,
+      toggleMenu() {
+        this.isOpen = !this.isOpen;
+        document.body.style.overflow = this.isOpen ? 'hidden' : 'auto';
+      }
+    }
+  }
+
+</script>
