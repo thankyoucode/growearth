@@ -58,3 +58,6 @@ build/
 
 # not used
 src/.gitignore
+
+# Documents
+docs/

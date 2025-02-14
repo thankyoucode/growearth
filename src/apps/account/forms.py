@@ -6,15 +6,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from .._services.email_verify import EmailVerificationService
-from .mixins import GrowEarthFormMixin, PasswordValidationMixin
-from .models import Customer
-
-User = get_user_model()
+from .models import CustomUser
 
 
-class UserRegistrationForm(
-    GrowEarthFormMixin, PasswordValidationMixin, forms.ModelForm
-):
+class UserRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(
         label="Create Password",
         widget=forms.PasswordInput(
@@ -31,22 +26,15 @@ class UserRegistrationForm(
             attrs={"placeholder": "Confirm your password", "class": "grow-earth-input"}
         ),
     )
-    profile_picture = forms.ImageField(
-        required=False,
-        widget=forms.ClearableFileInput(attrs={"class": "grow-earth-input"}),
-        help_text="Optional: Upload a profile picture.",
-    )
 
     class Meta:
-        model = Customer
+        model = CustomUser
         fields = [
             "first_name",
             "last_name",
             "email",
             "phone_number",
             "address",
-            "bio",
-            "profile_picture",
         ]
         widgets = {
             "first_name": forms.TextInput(
@@ -64,17 +52,11 @@ class UserRegistrationForm(
             "address": forms.Textarea(
                 attrs={"placeholder": "Your address", "class": "grow-earth-input"}
             ),
-            "bio": forms.Textarea(
-                attrs={
-                    "placeholder": "Tell us about yourself",
-                    "class": "grow-earth-input",
-                }
-            ),
         }
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        if User.objects.filter(email=email).exists():
+        if CustomUser.objects.filter(email=email).exists():
             raise ValidationError("This email is already registered")
         return email
 
@@ -127,12 +109,6 @@ class UserRegistrationForm(
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-
-        # Handle profile picture if uploaded
-        profile_picture = self.cleaned_data.get("profile_picture")
-        if profile_picture:
-            user.profile_picture = profile_picture
-
         if commit:
             user.save()
         return user
@@ -172,7 +148,7 @@ class UserLoginForm(forms.Form):
         return self.cleaned_data
 
     class Meta:
-        model = Customer
+        model = CustomUser
         fields = [
             "email",
         ]

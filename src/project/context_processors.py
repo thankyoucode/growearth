@@ -97,25 +97,25 @@ def navigation_links(request):
     return {
         "auth_links": {
             "login": {
-                "url": "accounts:login",
+                "url": "account:login",
                 "label": _("Log In"),
                 "icon": "fa-sign-in",
                 "style": "secondary",
             },
             "register": {
-                "url": "accounts:register",
+                "url": "account:register",
                 "label": _("Sign Up"),
                 "icon": "fa-user-plus",
                 "style": "outline",
             },
             "logout": {
-                "url": "accounts:logout",
+                "url": "account:logout",
                 "label": _("Logout"),
                 "icon": "fa-sign-out",
                 "style": "danger",
             },
             "profile": {
-                "url": "accounts:profile",
+                "url": "account:profile",
                 "label": _("My Profile"),
                 "icon": "fa-user",
                 "style": "primary",

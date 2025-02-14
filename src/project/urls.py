@@ -7,7 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("apps.core.urls")),
     path("store/", include("apps.store.urls")),
-    path("accounts/", include("apps.accounts.urls")),
+    path("account/", include("apps.account.urls")),
     # path("tags/", include("apps.tags.urls")),
     # not using two_factor authentication
     # path("two_factor/", include(("two_factor.urls", "two_factor"))),

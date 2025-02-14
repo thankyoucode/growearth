@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Login - Grow Earth{% endblock %}
 {% block content %}
-  <h3>User profile</h3>
+  <h3>{{user.first_name}} profile</h3>
   <p>user details</p>
+  <p>Your email: {{ user.email }}, that we use to manage your account and send notification</p>
 {% endblock %}
