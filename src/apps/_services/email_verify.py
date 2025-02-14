@@ -1,3 +1,4 @@
+import logging
 import secrets
 from typing import Optional, TypeVar, Union
 
@@ -9,7 +10,7 @@ from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from .logging_config import LoggerConfig  # Updated import
+from .logging_config import LoggerConfig
 
 # Type Variable for User Model
 UserModelType = TypeVar("UserModelType", bound=AbstractBaseUser)
@@ -17,7 +18,7 @@ UserModelType = TypeVar("UserModelType", bound=AbstractBaseUser)
 # Get the current user model dynamically
 User = get_user_model()
 
-# Setup Logger using new LoggerConfig method
+# Setup Logger
 logger = LoggerConfig.setup_logger("email_verification")
 
 
@@ -56,7 +57,7 @@ class EmailVerificationService:
             return code
 
         except Exception as e:
-            logger.error(f"Code generation error: {e}", exc_info=True)
+            logger.error(f"Code generation error: {e}")
             raise
 
     @classmethod
@@ -107,7 +108,7 @@ class EmailVerificationService:
             return True
 
         except Exception as e:
-            logger.error(f"Email sending error: {e}", exc_info=True)
+            logger.error(f"Email sending error: {e}")
             return False
 
     @staticmethod
@@ -141,7 +142,7 @@ class EmailVerificationService:
             return False
 
         except Exception as e:
-            logger.error(f"Verification validation error: {e}", exc_info=True)
+            logger.error(f"Verification validation error: {e}")
             return False
 
     @classmethod
@@ -173,5 +174,5 @@ class EmailVerificationService:
             return new_code
 
         except Exception as e:
-            logger.error(f"Code resend error: {e}", exc_info=True)
+            logger.error(f"Code resend error: {e}")
             raise

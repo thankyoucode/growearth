@@ -8,13 +8,19 @@ python manage.py tailwind runserver 0.0.0.0:8000
 
 - register, login, logout
 
-### 29, Jan, 2025 - working date
+### Date: 12/02/2025
 
-- password reset for user
-  - making tamplate for that
-  - wrting view for that password reset tamplates
-  - write urls for that
-  - password reset by send email with reset link
+Working on register and login,
+
+Not login and it using user.username from admin name when admin is login in web header
+user (admin) and customer account relation problem
+
+**Example account**
+
+```plaintext
+dilip@gmail.com
+]U@cm$H:79WN~?^
+```
 
 ## Backup code
 

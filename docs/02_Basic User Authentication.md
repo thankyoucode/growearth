@@ -36,7 +36,7 @@ def register_user(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+        return render(request, 'register.html', {'form': form})
 
 def login_user(request):
     if request.method == 'POST':

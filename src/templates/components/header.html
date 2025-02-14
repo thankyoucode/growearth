@@ -43,7 +43,7 @@
       <!-- Authentication Links Section -->
       <div class="flex items-center space-x-4">
         {% if user.is_authenticated %}
-        <!-- User Profile Dropdown with Refined Design -->
+        <!-- Customer Profile Dropdown with Refined Design -->
         <div x-data="{ open: false }" class="relative">
           <button @click="open = !open"
             class="flex items-center gap-2 px-3 py-2 bg-secondary/10 rounded-full text-white hover:bg-secondary/20 transition-all duration-300 group">
@@ -51,7 +51,7 @@
               <div class="w-8 h-8 bg-saffron/30 rounded-full flex items-center justify-center">
                 <i class="fas fa-user text-white text-sm"></i>
               </div>
-              <span class="font-medium text-sm">{{ user.username|default:'Profile' }}</span>
+              <span class="font-medium text-sm">{{ user.username |default:'Profile' }}</span>
             </div>
             <svg class="w-4 h-4 transform transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none"
               stroke="currentColor" viewBox="0 0 24 24">
@@ -111,15 +111,42 @@
 
     </div>
 
-    <!-- Mobile Toggle Button -->
-     <!-- working but not change open to close and close to open i wont to apply that withminimal design -->
-    <div class="md:hidden">
-      <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
-        aria-expanded="false"
-        class="text-white focus:outline-none p-1 hover:bg-black hover:bg-opacity-15 rounded-sm text-xl text-center">
-        &#9776;
-      </button>
-    </div>
+<div class="md:hidden">
+  <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks" aria-expanded="false"
+    class="text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
+    <i class="fas fa-bars open"></i>
+    <i class="fas fa-times close hidden"></i>
+  </button>
+</div>
+
+<!-- CSS (for animation) -->
+<style>
+  /* Keyframes for icon transition */
+  @keyframes iconTransition {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .open {
+    animation: iconTransition 0.3s forwards;
+  }
+
+  .close {
+    animation: iconTransition 0.3s forwards;
+  }
+</style>
   </nav>
 
   <!-- Mobile Navigation Overlay -->
@@ -166,7 +193,7 @@
       <!-- Mobile Authentication Section -->
       <div class="mt-10 space-y-5">
         {% if user.is_authenticated %}
-        <!-- User Profile Overview -->
+        <!-- Customer Profile Overview -->
         <div
           class="bg-secondary/20 rounded-2xl p-4 flex items-center justify-between mb-5 hover:bg-secondary/30 transition-all duration-300">
           <div class="flex items-center space-x-4">
@@ -174,7 +201,7 @@
               class="w-11 h-11 bg-saffron/30 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
               <i class="fas fa-user text-white text-lg"></i>
             </div>
-            <span class="text-white font-semibold text-base tracking-wide">{{ user.username }}</span>
+            <span class="text-white font-semibold text-base tracking-wide">{{ user.first_name }}</span>
           </div>
         </div>
 
@@ -225,45 +252,36 @@
 
 <!-- Mobile Navigation JavaScript -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.getElementById("toggleButton");
-    const mobileNavLinks = document.getElementById("mobileNavLinks");
+      document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.getElementById('toggleButton');
+        const openIcon = toggleButton.querySelector('.open');
+        const closeIcon = toggleButton.querySelector('.close');
+        const mobileNavLinks = document.getElementById("mobileNavLinks");
 
-    toggleButton.addEventListener("click", function () {
-      // Toggle the mobile navigation links
-      if (mobileNavLinks.classList.contains("max-h-0")) {
-        mobileNavLinks.classList.remove("max-h-0");
-        mobileNavLinks.classList.add("max-h-screen", "top-[120%]"); // Move down to below header
-      } else {
-        mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
-        mobileNavLinks.classList.add("max-h-0", "top-[-100%]"); // Move back up completely out of view
-      }
-    });
+        toggleButton.addEventListener('click', function () {
+          const expanded = toggleButton.getAttribute("aria-expanded") === "true";
 
-    // Close the mobile navigation links when clicking outside
-    document.addEventListener("click", function (event) {
-      const isClickInside =
-        mobileNavLinks.contains(event.target) ||
-        toggleButton.contains(event.target);
+          toggleButton.setAttribute("aria-expanded", !expanded);
+          openIcon.classList.toggle('hidden');
+          closeIcon.classList.toggle('hidden');
 
-      if (!isClickInside) {
-        // Close the menu if it's open
-        if (!mobileNavLinks.classList.contains("max-h-0")) {
-          mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
-          mobileNavLinks.classList.add("max-h-0", "top-[-100%]"); // Move back up completely out of view
-        }
-      }
-    });
-  });
+          if (mobileNavLinks.classList.contains("max-h-0")) {
+            mobileNavLinks.classList.remove("max-h-0");
+            mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
+          } else {
+            mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+            mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
+          }
+        });
 
-  function mobileNavigation() {
-    return {
-      isOpen: false,
-      toggleMenu() {
-        this.isOpen = !this.isOpen;
-        document.body.style.overflow = this.isOpen ? 'hidden' : 'auto';
-      }
-    }
-  }
-
+        document.addEventListener('click', function (event) {
+          if (!toggleButton.contains(event.target) && !mobileNavLinks.contains(event.target)) {
+            toggleButton.setAttribute("aria-expanded", "false");
+            openIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+            mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
+          }
+        });
+      });
 </script>

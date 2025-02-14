@@ -12,7 +12,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class CustomUserManager(BaseUserManager):
+class CustomerManager(BaseUserManager):
     def create_user(self, email, username, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
@@ -29,7 +29,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, username, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class Customer(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=50, unique=True)
@@ -49,7 +49,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     bio = models.TextField(max_length=500, blank=True)
 
-    objects = CustomUserManager()
+    objects = CustomerManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
@@ -151,7 +151,7 @@ class ProductImage(models.Model):
 
 class CartItem(models.Model):
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="cart_items"
+        Customer, on_delete=models.CASCADE, related_name="cart_items"
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
@@ -182,7 +182,7 @@ class Order(models.Model):
     ]
 
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="orders"
+        Customer, on_delete=models.CASCADE, related_name="orders"
     )
     order_number = models.CharField(max_length=20, unique=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -225,7 +225,7 @@ class OrderItem(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(
         Product, related_name="reviews", on_delete=models.CASCADE
     )
@@ -235,7 +235,7 @@ class Review(models.Model):
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
@@ -246,7 +246,7 @@ class Wishlist(models.Model):
 
 ## Comprehensive Model Analysis for Grow Earth Project
 
-### 1. CustomUserManager
+### 1. CustomerManager
 
 **Purpose**: Custom user creation and management
 **Key Features**:
@@ -267,7 +267,7 @@ class Wishlist(models.Model):
 - Superuser creation
 - Custom authentication workflows
 
-### 2. CustomUser Model
+### 2. Customer Model
 
 **Purpose**: Comprehensive user representation
 **Key Attributes**:

@@ -20,9 +20,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Optional: Simple Email-Based Authentication
-    "django_otp",
-    "django_otp.plugins.otp_static",
     # Project Apps (Full Python Path)
     "apps.core.apps.CoreConfig",
     "apps.store.apps.StoreConfig",
@@ -31,6 +28,11 @@ INSTALLED_APPS = [
     # Third-Party
     "django_tailwind_cli",
     "fontawesomefree",
+    # Optional: Simple Email-Based Authentication
+    # "django_otp",
+    # "django_otp.plugins.otp_totp",
+    # "two_factor",
+    # "phonenumbers",
 ]
 
 
@@ -39,15 +41,15 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "django_otp.middleware.OTPMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "two_factor.backends.auth.TokenBackend",
+    # "two_factor.backends.auth.TokenBackend",
 ]
 
 # Template Configuration
@@ -114,11 +116,11 @@ DATABASES["default"].update(
 # sys.path.append(os.path.abspath(os.path.join(BASE_DIR, 'src')))
 
 # Disable Phone-Related Configurations
-TWO_FACTOR_CALL_GATEWAY = None
-TWO_FACTOR_SMS_GATEWAY = None
+# TWO_FACTOR_CALL_GATEWAY = None
+# TWO_FACTOR_SMS_GATEWAY = None
 
-LOGIN_URL = "two_factor:login"
-LOGIN_REDIRECT_URL = "two_factor:profile"
+# LOGIN_URL = "two_factor:login"
+# LOGIN_REDIRECT_URL = "two_factor:profile"
 
 # Email Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -127,3 +129,4 @@ EMAIL_PORT = os.getenv("EMAIL_PORT", 587)
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")

@@ -5,144 +5,133 @@ from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .._services.verify_email import EmailVerificationService
+from .._services.email_verify import EmailVerificationService
+from .mixins import GrowEarthFormMixin, PasswordValidationMixin
+from .models import Customer
 
 User = get_user_model()
-
-
-class GrowEarthFormMixin:
-    """
-    Custom form styling mixin for Grow Earth platform
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs.update(
-                {
-                    "class": "w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition duration-300",
-                    "placeholder": field.label,
-                }
-            )
-
-
-class PasswordValidationMixin:
-    """
-    Advanced password validation with Grow Earth specific rules
-    """
-
-    def validate_password(self, password):
-        """
-        Comprehensive password validation
-        """
-        validation_rules = [
-            (lambda p: len(p) >= 8, "Password must be at least 8 characters"),
-            (lambda p: re.search(r"[A-Z]", p), "Must contain uppercase letter"),
-            (lambda p: re.search(r"[a-z]", p), "Must contain lowercase letter"),
-            (lambda p: re.search(r"\d", p), "Must contain a number"),
-            (
-                lambda p: re.search(r'[!@#$%^&*(),.?":{}|<>]', p),
-                "Must contain special character",
-            ),
-        ]
-
-        for validator, message in validation_rules:
-            if not validator(password):
-                raise ValidationError(_(message))
-
-        return password
 
 
 class UserRegistrationForm(
     GrowEarthFormMixin, PasswordValidationMixin, forms.ModelForm
 ):
     password1 = forms.CharField(
-        label=_("Create Password"),
+        label="Create Password",
         widget=forms.PasswordInput(
             attrs={
                 "placeholder": "Create a strong password",
                 "class": "grow-earth-input",
             }
         ),
-        help_text=_(
-            "Password must:\n"
-            "- Be at least 8 characters\n"
-            "- Contain uppercase & lowercase\n"
-            "- Include a number and symbol"
-        ),
+        help_text="Password must be at least 8 characters, contain uppercase & lowercase letters, and include a number and symbol.",
     )
-
     password2 = forms.CharField(
-        label=_("Confirm Password"),
+        label="Confirm Password",
         widget=forms.PasswordInput(
             attrs={"placeholder": "Confirm your password", "class": "grow-earth-input"}
         ),
     )
+    profile_picture = forms.ImageField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={"class": "grow-earth-input"}),
+        help_text="Optional: Upload a profile picture.",
+    )
 
     class Meta:
-        model = User
-        fields = ["username", "email", "first_name", "last_name"]
+        model = Customer
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "address",
+            "bio",
+            "profile_picture",
+        ]
         widgets = {
-            "username": forms.TextInput(
-                attrs={
-                    "placeholder": "Choose a unique username",
-                    "class": "grow-earth-input",
-                }
-            ),
-            "email": forms.EmailInput(
-                attrs={"placeholder": "Your email address", "class": "grow-earth-input"}
-            ),
             "first_name": forms.TextInput(
                 attrs={"placeholder": "Your first name", "class": "grow-earth-input"}
             ),
             "last_name": forms.TextInput(
                 attrs={"placeholder": "Your last name", "class": "grow-earth-input"}
             ),
+            "email": forms.EmailInput(
+                attrs={"placeholder": "Your email address", "class": "grow-earth-input"}
+            ),
+            "phone_number": forms.TextInput(
+                attrs={"placeholder": "Your phone number", "class": "grow-earth-input"}
+            ),
+            "address": forms.Textarea(
+                attrs={"placeholder": "Your address", "class": "grow-earth-input"}
+            ),
+            "bio": forms.Textarea(
+                attrs={
+                    "placeholder": "Tell us about yourself",
+                    "class": "grow-earth-input",
+                }
+            ),
         }
-
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if User.objects.filter(username=username).exists():
-            raise ValidationError(_("Username is already taken"))
-        return username
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-
-        # Email Validation Service Integration
-        validation_result = EmailVerificationService.validate_email(email)
-
-        # Check email validity
-        if not validation_result["is_valid"]:
-            raise ValidationError(_("Invalid email address"))
-
-        # Check for disposable email
-        if validation_result.get("is_disposable"):
-            raise ValidationError(_("Disposable emails are not allowed"))
-
-        # Check email uniqueness
         if User.objects.filter(email=email).exists():
-            raise ValidationError(_("Email is already registered"))
-
+            raise ValidationError("This email is already registered")
         return email
 
+    def clean_password1(self):
+        password = self.cleaned_data.get("password1")
+        if not self.is_valid_password(password):
+            raise ValidationError(
+                "Password must be at least 8 characters long, contain both uppercase and lowercase letters, include at least one number, and one special character."
+            )
+        return password
+
+    def is_valid_password(self, password):
+        """
+        Check if the password is strong enough.
+        """
+        if len(password) < 8:
+            return False
+        if not re.search(r"[A-Z]", password):  # Check for uppercase letters
+            return False
+        if not re.search(r"[a-z]", password):  # Check for lowercase letters
+            return False
+        if not re.search(r"[0-9]", password):  # Check for numbers
+            return False
+        if not re.search(
+            r"[!@#$%^&*(),.?\":{}|<>]", password
+        ):  # Check for special chars
+            return False
+        return True
+
     def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get("password1")
-        password2 = cleaned_data.get("password2")
+        self.cleaned_data = super().clean()
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
 
         if password1 and password2 and password1 != password2:
-            raise ValidationError(_("Passwords do not match"))
+            raise ValidationError("Passwords do not match")
 
-        if password1:
-            self.validate_password(password1)
+        # Email verification after form is cleaned
+        if password1 and password2:
+            email_verification_service = EmailVerificationService()
+            verification_code = email_verification_service.generate_verification_code(
+                self.instance.id
+            )
+            email_verification_service.send_verification_email(
+                self.instance, verification_code
+            )
 
-        return cleaned_data
+        return self.cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        user.is_active = True
+
+        # Handle profile picture if uploaded
+        profile_picture = self.cleaned_data.get("profile_picture")
+        if profile_picture:
+            user.profile_picture = profile_picture
 
         if commit:
             user.save()
@@ -181,3 +170,14 @@ class UserLoginForm(forms.Form):
                 raise forms.ValidationError(_("This account is not active"))
 
         return self.cleaned_data
+
+    class Meta:
+        model = Customer
+        fields = [
+            "email",
+        ]
+        widgets = {
+            "email": forms.EmailInput(
+                attrs={"placeholder": "Your email address", "class": "grow-earth-input"}
+            ),
+        }

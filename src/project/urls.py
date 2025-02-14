@@ -4,16 +4,13 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    # Admin URLs
     path("admin/", admin.site.urls),
-    # App-specific URLs
-    path("", include("apps.core.urls")),  # Home/Landing page
-    path("store/", include("apps.store.urls")),  # Store-related pages
-    path(
-        "accounts/", include("apps.accounts.urls")
-    ),  # Authentication & User management
-    # path("tags/", include("apps.tags.urls")),  # Optional: Tag-related URLs
-    # Development & Debug URLs
+    path("", include("apps.core.urls")),
+    path("store/", include("apps.store.urls")),
+    path("accounts/", include("apps.accounts.urls")),
+    # path("tags/", include("apps.tags.urls")),
+    # not using two_factor authentication
+    # path("two_factor/", include(("two_factor.urls", "two_factor"))),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

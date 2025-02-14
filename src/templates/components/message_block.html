@@ -1,5 +1,5 @@
 {% if messages %}
-<div id="message-container" class="fixed bottom-4 right-4 z-50 space-y-2">
+<div id="message-container" class="fixed bottom-4 right-2  md:right-4 z-50 space-y-2">
   {% for message in messages %}
   <div
     class="message-alert {% if message.extra_tags == 'alert-success' %}bg-green-500{% endif %} {% if message.extra_tags == 'alert-danger' %}bg-red-500{% endif %} {% if message.extra_tags == 'alert-warning' %}bg-yellow-500{% endif %} {% if message.extra_tags == 'alert-info' %}bg-blue-500{% endif %} text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out opacity-0 translate-x-full"
@@ -27,6 +27,8 @@
             d="M13.875 18.825A7.5 7.5 0 119.375 5.175m3.75-.675V12m0 .5h-.01"></path>
         </svg>
         {% endif %}
+      </div>
+      <div class="flex items-center">
         <span class="font-semibold">{{ message }}</span>
       </div>
       <button type="button" class="ml-4 close-message hover:bg-opacity-25 hover:bg-white rounded px-2">&times;</button>

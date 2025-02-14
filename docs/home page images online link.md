@@ -1,9 +1,10 @@
-https://images.pexels.com/photos/17835461/pexels-photo-17835461.jpeg?cs=srgb&dl=pexels-black-ibex-2040068-17835461.jpg&fm=jpg
-
+```bash
 curl -o rural-spaces --limit-rate 100K https://images.pexels.com/photos/17835461/pexels-photo-17835461.jpeg?cs=srgb&dl=pexels-black-ibex-2040068-17835461.jpg&fm=jpg
 
 wget --limit-rate=100k https://images.pexels.com/photos/1567620/pexels-photo-1567620.jpeg?cs=srgb&dl=pexels-athena-1567620.jpg&fm=jpg -O pexels-athena-1567620.jpg
+```
 
+https://images.pexels.com/photos/17835461/pexels-photo-17835461.jpeg?cs=srgb&dl=pexels-black-ibex-2040068-17835461.jpg&fm=jpg
 
 image 1 rural
 https://images.pexels.com/photos/17835461/pexels-photo-17835461.jpeg?cs=srgb&dl=pexels-black-ibex-2040068-17835461.jpg&fm=jpg

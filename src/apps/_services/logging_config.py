@@ -13,6 +13,9 @@ class LoggerConfig:
     Centralized logging configuration utility
     """
 
+    def __init__(self, log_for: str):
+        self.log_for = log_for
+
     @staticmethod
     def create_logs_directory() -> str:
         """
