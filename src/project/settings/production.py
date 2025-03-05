@@ -2,7 +2,7 @@ import os
 
 from .base import *
 
-# Production Security
+# Plantion Security
 DEBUG = False
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 

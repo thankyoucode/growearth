@@ -51,7 +51,7 @@
               <div class="w-8 h-8 bg-saffron/30 rounded-full flex items-center justify-center">
                 <i class="fas fa-user text-white text-sm"></i>
               </div>
-              <span class="font-medium text-sm">{{ user.username |default:'Profile' }}</span>
+              <span class="font-medium text-sm">{{ user.first_name |default:'Profile' }}</span>
             </div>
             <svg class="w-4 h-4 transform transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none"
               stroke="currentColor" viewBox="0 0 24 24">

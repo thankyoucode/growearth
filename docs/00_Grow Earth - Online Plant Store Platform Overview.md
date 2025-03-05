@@ -9,10 +9,19 @@ Grow Earth is a Django-based online plant store platform with a modular, well-st
 ### 1. Project Structure
 
 - **Main Directories**:
+
   - `app/`: Core application logic
   - `growearth/`: Project configuration
   - `static/`: Static files and frontend assets
   - `templates/`: HTML templates
+  - `apps`: sub applications
+    - `core`: basic web pages
+    - `account`: Customer/User/Admin account management
+    - `store`: Plants, Order
+  - `media`: images and videos
+  - `project`: main project
+  - `static`: static file like css, js, images
+  - `templates`: apps templates
 
 ### 2. Authentication System
 

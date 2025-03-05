@@ -1,20 +1,20 @@
 consider this information to adding more aproriate home page content
 Why Are Plants Important?
 
-    houseplants
-    healthy
-    indoor-plants
-    medicine
+- houseplants
+- healthy
+- indoor-plants
+- medicine
 
-Table of Contents
+## Table of Contents
 
-    ​​Reasons Why Plants Are Important For Us
-    How Do Plants Help Improve Human Health?
-    Importance of Plants for Kids
+- ​​Reasons Why Plants Are Important For Us
+- How Do Plants Help Improve Human Health?
+- Importance of Plants for Kids
 
 They are versatile and can live indoors as decor and in gardens as food sources for animals, insects, and humans alike. Why are plants important? Plants are necessary to sustain life on this planet for their oxygen-giving qualities and as a key link in the food chain. Without plants, the world as we know it could not exist, so there are plenty of reasons to recognize why plants are important.
 
-​​Reasons Why Plants Are Important For Us
+​​### Reasons Why Plants Are Important For Us
 
 Early plant life started out as photosynthetic oceanic material that gave way to oxygenate the atmosphere, making it possible for life as we know it to exist. The importance of plants on Earth is not to be understated, so here are some reasons plants are necessary to the world’s environment.
 
@@ -29,7 +29,7 @@ Early plant life started out as photosynthetic oceanic material that gave way to
     Contributions to the Water Cycle: When plants absorb the water, it doesn't stay in its system forever; instead, it is transpired from the leaves, sending it back into circulation by getting absorbed by clouds and eventually put back into play by the rain.
     Maintenance of Soil Health: Plant roots can help anchor soil in rocky or turbulent terrains and provide a way to recycle and add nutrients back into the soil.
 
-How Do Plants Help Improve Human Health?
+​​### How Do Plants Help Improve Human Health?
 
 What do plants do to make them so important to human health, and how do plants improve human health? Medicines, foods, and even our mental well-being can all be attributed to maintaining humans since the two began to coexist.
 
@@ -37,13 +37,13 @@ What do plants do to make them so important to human health, and how do plants i
     Plants can reduce anxiety, stress, and depression in people around more natural scenes and greenery.
     Plants clean the air of carbon dioxide and other pollutants, which can adversely affect human health.
 
-Importance of Plants for Kids
+​​### Importance of Plants for Kids
 
 Kids can learn a lot from plants to help them become more responsible and empathetic in adulthood. Caring for a plant requires effort to ensure they have what is needed to stay healthy, much like how people need water, food, and nutrients to perform to the best of their abilities.
 
 Children might also wonder, “why do we need plants?” and by giving them first-hand experience, they will be able to learn how everything depends on each other to work properly. It also helps to keep kids connected to the earth when they learn how much plants are used in their everyday lives. From edible food grown in the backyard to learning the importance of plants and their pollinators, plants can be very useful tools in teaching kids useful skills, confidence, and how to best interact with the world around them.
 
-Best Plants to Plant Indoors
+​​### Best Plants to Plant Indoors
 
 Bringing some of the great outdoors inside can be useful for improving mental well-being and focus, cleaning the air, and even as a lovely statement piece for decoration purposes. Here are some of the best plants to bring inside:
 
@@ -51,8 +51,6 @@ Bringing some of the great outdoors inside can be useful for improving mental we
     Aloe Vera: a low-maintenance succulent that can be grown anywhere there’s a window with bright light. Aloe Vera pulp can be used to treat burns and is safe to consume for its antioxidants.
     Microgreens: Easy to grow indoors using a microgreen setup or just some plant lights, and also are healthy additions to salads and other raw preparations. These greens are rich in vitamins C, K, and E, chlorophyll, and carotenoids.
     Pothos: This is the kind for you if you want a fast-growing plant. Their quick-growing and vining nature can beautify any space quite quickly. They’re particularly useful in offices or low-light spaces to help focus and relieve stress.
-
-###
 
 14 Uses of Plants & their Importance to Humans & Nature
 Published on 04/04/2012 - Updated on 04/15/2024 by Ranga.nr

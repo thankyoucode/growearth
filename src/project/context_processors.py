@@ -129,14 +129,20 @@ def navigation_links(request):
                 "active": request.path == reverse("core:home"),
             },
             {
+                "name": _("Plants"),
+                "url": "store:plants",
+                "type": "single",
+                "active": request.path == reverse("store:plants"),
+            },
+            {
                 "name": _("Care Guide"),
-                "url": "store:care_guide",  # URL pattern name
+                "url": "store:care_guide",
                 "type": "single",
                 "active": request.path == reverse("store:care_guide"),
             },
             {
                 "name": _("Consultation"),
-                "url": "core:consultation",  # URL pattern name
+                "url": "core:consultation",
                 "type": "single",
                 "active": request.path == reverse("core:consultation"),
             },

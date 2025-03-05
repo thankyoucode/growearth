@@ -23,6 +23,7 @@ help:
 	@echo "  test        - Run project tests"
 	@echo "  lint        - Run code linting"
 	@echo "  clean       - Remove cached files and clean project"
+	@echo "  superuser   - Create superuser in django website to manage database"
 
 # Setup project environment
 .PHONY: setup

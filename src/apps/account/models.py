@@ -1,11 +1,36 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    Group,
+    Permission,
+    PermissionsMixin,
+)
 from django.db import models
 from django.utils import timezone
 
 
-class CustomUser(AbstractUser):
+class CustomUserManager(BaseUserManager):
+    # using first_name on place of username
+    # first_name can not need to uniqe
+    def create_user(self, email, first_name, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, first_name=first_name, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, first_name, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        return self.create_user(email, first_name, password, **extra_fields)
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50, help_text="User's first name")
@@ -28,6 +53,8 @@ class CustomUser(AbstractUser):
         blank=True,
         verbose_name="user permissions",
     )
+
+    objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name"]

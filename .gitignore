@@ -20,6 +20,8 @@ db.sqlite3-journal
 
 # Media and User-Uploaded Content
 src/media/
+# Helping script
+src/scripts/
 
 # Static Files
 src/static/css/tailwind.css
