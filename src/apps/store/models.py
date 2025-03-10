@@ -3,15 +3,17 @@ import uuid
 from django.db import models
 from django.utils import timezone
 
-from ..account.models import CustomUser
+from ..accounts.models import CustomUser
 
 
 class Tag(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tag = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
 
 
 class Category(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to="category_images/", null=True, blank=True)
@@ -23,6 +25,7 @@ class Category(models.Model):
 
 
 class Plant(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="plants"
@@ -44,6 +47,8 @@ class Plant(models.Model):
             ("MODERATE", "Moderate"),
             ("DIFFICULT", "Difficult"),
         ],
+        null=True,
+        blank=True,  # Important: allow NULL values
     )
 
     # Plant-Specific Attributes
@@ -54,10 +59,14 @@ class Plant(models.Model):
             ("PARTIAL_SUN", "Partial Sun"),
             ("SHADE", "Shade"),
         ],
+        null=True,
+        blank=True,  # Important: allow NULL values
     )
     water_frequency = models.CharField(
         max_length=50,
         choices=[("LOW", "Low"), ("MODERATE", "Moderate"), ("HIGH", "High")],
+        null=True,
+        blank=True,  # Important: allow NULL values
     )
 
     weight = models.DecimalField(
@@ -82,6 +91,7 @@ class Plant(models.Model):
 
 
 class CartItem(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="cart_items"
     )
@@ -97,6 +107,7 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     STATUS_CHOICES = [
         ("PENDING", "Pending"),
         ("PROCESSING", "Processing"),
@@ -146,6 +157,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()

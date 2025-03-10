@@ -40,6 +40,13 @@
       {% endif %}
       {% endfor %}
 
+      <!-- Cart Icon (Desktop) -->
+      <a href="{% url 'store:cart' %}"
+        class="text-lg hover:text-secondary transition duration-300 flex items-center space-x-2">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+      </a>
+
       <!-- Authentication Links Section -->
       <div class="flex items-center space-x-4">
         {% if user.is_authenticated %}
@@ -111,44 +118,44 @@
 
     </div>
 
-<div class="md:hidden">
-  <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks" aria-expanded="false"
-    class="text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
-    <i class="fas fa-bars open"></i>
-    <i class="fas fa-times close hidden"></i>
-  </button>
-</div>
+    <div class="md:hidden">
+      <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
+        aria-expanded="false"
+        class="text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
+        <i class="fas fa-bars open"></i>
+        <i class="fas fa-times close hidden"></i>
+      </button>
+    </div>
 
-<!-- CSS (for animation) -->
-<style>
-  /* Keyframes for icon transition */
-  @keyframes iconTransition {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
+    <!-- CSS (for animation) -->
+    <style>
+      /* Keyframes for icon transition */
+      @keyframes iconTransition {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
 
-    50% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
+        50% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
 
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
-  .open {
-    animation: iconTransition 0.3s forwards;
-  }
+      .open {
+        animation: iconTransition 0.3s forwards;
+      }
 
-  .close {
-    animation: iconTransition 0.3s forwards;
-  }
-</style>
+      .close {
+        animation: iconTransition 0.3s forwards;
+      }
+    </style>
   </nav>
-
   <!-- Mobile Navigation Overlay -->
   <div id="mobileNavLinks"
     class="max-h-0 flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ease-in-out bg-primary p-6 rounded-md w-full max-w-md absolute left-1/2 transform -translate-x-1/2 top-[-100%] z-50">
@@ -188,6 +195,14 @@
         </div>
         {% endif %}
         {% endfor %}
+
+        <!-- Cart Icon (Mobile) -->
+        <a href="{% url 'store:cart' %}"
+          class="group relative text-[1.1rem] text-white/90 hover:text-saffron transition-all duration-300 transform hover:translate-x-2 flex items-center justify-between">
+          <span class="tracking-wide">Cart</span>
+          <i
+            class="fas fa-shopping-cart text-base opacity-0 group-hover:opacity-100 group-hover:text-saffron transition-all duration-300"></i>
+        </a>
       </div>
 
       <!-- Mobile Authentication Section -->
@@ -252,36 +267,36 @@
 
 <!-- Mobile Navigation JavaScript -->
 <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const toggleButton = document.getElementById('toggleButton');
-        const openIcon = toggleButton.querySelector('.open');
-        const closeIcon = toggleButton.querySelector('.close');
-        const mobileNavLinks = document.getElementById("mobileNavLinks");
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleButton');
+    const openIcon = toggleButton.querySelector('.open');
+    const closeIcon = toggleButton.querySelector('.close');
+    const mobileNavLinks = document.getElementById("mobileNavLinks");
 
-        toggleButton.addEventListener('click', function () {
-          const expanded = toggleButton.getAttribute("aria-expanded") === "true";
+    toggleButton.addEventListener('click', function () {
+      const expanded = toggleButton.getAttribute("aria-expanded") === "true";
 
-          toggleButton.setAttribute("aria-expanded", !expanded);
-          openIcon.classList.toggle('hidden');
-          closeIcon.classList.toggle('hidden');
+      toggleButton.setAttribute("aria-expanded", !expanded);
+      openIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
 
-          if (mobileNavLinks.classList.contains("max-h-0")) {
-            mobileNavLinks.classList.remove("max-h-0");
-            mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
-          } else {
-            mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
-            mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
-          }
-        });
+      if (mobileNavLinks.classList.contains("max-h-0")) {
+        mobileNavLinks.classList.remove("max-h-0");
+        mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
+      } else {
+        mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+        mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
+      }
+    });
 
-        document.addEventListener('click', function (event) {
-          if (!toggleButton.contains(event.target) && !mobileNavLinks.contains(event.target)) {
-            toggleButton.setAttribute("aria-expanded", "false");
-            openIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
-            mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
-          }
-        });
-      });
+    document.addEventListener('click', function (event) {
+      if (!toggleButton.contains(event.target) && !mobileNavLinks.contains(event.target)) {
+        toggleButton.setAttribute("aria-expanded", "false");
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
+        mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
+      }
+    });
+  });
 </script>

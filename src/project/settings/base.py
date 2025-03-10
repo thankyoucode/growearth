@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     "apps.core.apps.CoreConfig",
     "apps.store.apps.StoreConfig",
     "apps.tags.apps.TagsConfig",
-    "apps.account.apps.AccountConfig",
+    "apps.accounts.apps.AccountsConfig",
     # Third-Party
     "django_tailwind_cli",
     "fontawesomefree",
@@ -45,6 +45,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "django_otp.middleware.OTPMiddleware",
+    "apps.store.middleware.merge_cart.MergeCartMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -89,9 +90,11 @@ USE_TZ = True
 
 # Static and Media Files
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Source directories for static files
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory for collected static files
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
+
 
 # Database Configuration for SQLite3
 DATABASES = {
@@ -119,8 +122,8 @@ DATABASES["default"].update(
 # TWO_FACTOR_CALL_GATEWAY = None
 # TWO_FACTOR_SMS_GATEWAY = None
 
-# LOGIN_URL = "two_factor:login"
-# LOGIN_REDIRECT_URL = "two_factor:profile"
+# LOGIN_URL = "accounts/login/"
+# LOGIN_REDIRECT_URL = "accounts/login/"
 
 # Email Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -132,4 +135,4 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 
 # Authentication Model that use in templates and login, register
-AUTH_USER_MODEL = "account.CustomUser"
+AUTH_USER_MODEL = "accounts.CustomUser"

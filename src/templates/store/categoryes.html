@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} Category Manage - Grow Earth {% endblock %}
+{% block head %}
+<!-- Include AOS CSS -->
+<link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+{% endblock %}
+{% block content %}
+
+<!-- Page Container -->
+<div class="min-h-screen px-4 py-2 mb-8 bg-gradient-to-br from-green-50 via-white to-green-100">
+  <!-- Page Title -->
+  <h1 class="text-5xl font-extrabold text-center mt-8 mb-8 text-bamboo-green drop-shadow-md" data-aos="fade-down"
+    data-aos-duration="800">
+    Plant Categories
+  </h1>
+
+  <!-- Grid Layout -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ml-auto mr-auto max-w-screen-xl">
+    {% for category in categoryes %}
+    <!-- Animated Card -->
+    <div
+      class="flex flex-col md:flex-row border-2 border-darkBrown rounded-lg overflow-hidden bg-white shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+      data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ forloop.counter|add:100 }}">
+      <!-- Image Section -->
+      <div class="w-full md:w-1/2">
+        {% if category.image %}
+        <img loading="lazy" src="{{ category.image.url }}" alt="{{ category.title }}"
+          class="w-full h-full object-cover object-center aspect-[4/4] md:aspect-auto transition-transform duration-300 hover:scale-110" />
+        {% else %}
+        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+          <p class="text-gray-500">No image available for this plant.</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Content Section -->
+      <div class="w-full md:w-1/2 p-4 flex flex-col justify-between">
+        <h5 class="text-xl md:text-2xl font-bold text-bamboo-green mb-2">
+          {{ category.title }}
+        </h5>
+        <p class="text-gray-600 mb-4">{{ category.description }}</p>
+        <div class="flex justify-start">
+          <!-- Button with Subtle Hover Animation -->
+          <a href="{% url 'store:category_plants' category.slug %}"
+            class="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-full hover:from-green-500 hover:to-green-700 transition duration-300 transform hover:scale-[1.05] active:scale-[0.95]">
+            View Plants
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% block scripts %}
+<!-- Include AOS JavaScript -->
+<script src="{% static 'js/aos.js' %}"></script>
+<script>
+  AOS.init();
+</script>
+{% endblock %}
+
+{% endblock %}

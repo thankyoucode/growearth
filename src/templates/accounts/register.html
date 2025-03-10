@@ -1,0 +1,178 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} Register - Grow Earth {% endblock %}
+{% block content %}
+<div class="relative flex justify-center items-center min-h-screen py-4 px-2 bg-cover bg-center bg-no-repeat"
+  style="background-image: url('{% static 'images/form_background.jpg' %}')">
+  <form id="registerForm" method="post" enctype="multipart/form-data"
+    class="bg-white border border-gray-200 p-8 rounded-lg shadow-md w-full max-w-md">
+    {% csrf_token %}
+
+    <div class="text-center mb-4">
+      <h2 class="text-2xl font-bold text-gray-800">Register to Grow Earth</h2>
+      <p class="text-gray-500 mt-2 text-sm">Join us and start your gardening journey today!</p>
+    </div>
+
+    <!-- First Name Input -->
+    <div class="mb-4">
+      <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+      <input type="text" id="first_name" name="first_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      {% for error in form.first_name.errors %}
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+      {% endfor %}
+    </div>
+
+    <!-- Last Name Input -->
+    <div class="mb-4">
+      <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+      <input type="text" id="last_name" name="last_name" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      {% for error in form.last_name.errors %}
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+      {% endfor %}
+    </div>
+
+    <!-- Email Input -->
+    <div class="mb-4">
+      <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+    </div>
+
+    <!-- Password Input -->
+    <div class="mb-4">
+      <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+      <input type="password" id="password" name="password1" required placeholder="Enter your password" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+    </div>
+
+    <!-- Confirm Password Input -->
+    <div class="mb-4">
+      <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+      <input type="password" id="confirm_password" name="password2" required placeholder="Confirm your password" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-gray-800 text-white py-2.5 rounded-md">Register</button>
+
+    <!-- Alternative Action Links -->
+    <div class="flex justify-between mt-4">
+      <a href="{% url 'accounts:login' %}" class="text-gray-600 hover:text-gray-800 text-sm">Already have an account?
+        Login</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registerForm");
+    const firstnameInput = document.getElementById("first_name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirm_password");
+
+    function showError(input, message) {
+      const errorElement = input.nextElementSibling;
+      errorElement.textContent = message;
+      input.classList.add('border-red-500');
+    }
+
+    function clearError(input) {
+      const errorElement = input.nextElementSibling;
+      errorElement.textContent = "";
+      input.classList.remove('border-red-500');
+    }
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    firstnameInput.addEventListener("input", function () {
+      if (firstnameInput.value.trim() === "") {
+        showError(firstnameInput, "First Name is required");
+      } else {
+        clearError(firstnameInput);
+      }
+    });
+
+    emailInput.addEventListener("input", function () {
+      if (emailInput.value.trim() === "") {
+        showError(emailInput, "Email is required");
+      } else if (!validateEmail(emailInput.value)) {
+        showError(emailInput, "Invalid email format");
+      } else {
+        clearError(emailInput);
+      }
+    });
+
+    passwordInput.addEventListener("input", function () {
+      if (passwordInput.value.trim() === "") {
+        showError(passwordInput, "Password is required");
+      } else if (passwordInput.value.length < 8) {
+        showError(passwordInput, "Password must be at least 8 characters");
+      } else {
+        clearError(passwordInput);
+      }
+    });
+
+    confirmPasswordInput.addEventListener("input", function () {
+      if (confirmPasswordInput.value.trim() === "") {
+        showError(confirmPasswordInput, "Confirm Password is required");
+      } else if (confirmPasswordInput.value !== passwordInput.value) {
+        showError(confirmPasswordInput, "Passwords do not match");
+      } else {
+        clearError(confirmPasswordInput);
+      }
+    });
+
+    form.addEventListener("submit", function (event) {
+      let valid = true;
+
+      if (firstnameInput.value.trim() === "") {
+        showError(firstnameInput, "Username is required");
+        valid = false;
+      }
+
+      if (emailInput.value.trim() === "") {
+        showError(emailInput, "Email is required");
+        valid = false;
+      } else if (!validateEmail(emailInput.value)) {
+        showError(emailInput, "Invalid email format");
+        valid = false;
+      }
+
+      if (passwordInput.value.trim() === "") {
+        showError(passwordInput, "Password is required");
+        valid = false;
+      } else if (passwordInput.value.length < 8) {
+        showError(passwordInput, "Password must be at least 8 characters long");
+        valid = false;
+      }
+
+      if (confirmPasswordInput.value.trim() === "") {
+        showError(confirmPasswordInput, "Confirm Password is required");
+        valid = false;
+      } else if (confirmPasswordInput.value !== passwordInput.value) {
+        showError(confirmPasswordInput, "Passwords do not match");
+        valid = false;
+      }
+
+      if (!valid) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock %}

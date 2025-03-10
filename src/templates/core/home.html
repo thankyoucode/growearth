@@ -2,51 +2,39 @@
 Cultivating Connection Through Plants{% endblock %} {% block content %}
 <div class="bg-white">
   <!-- Hero Section: Impactful Introduction -->
-  <section
-    class="relative bg-primary/10 overflow-hidden"
-    style="min-height: 100vh"
-  >
-    <!-- Adjusting height to exclude header -->
+  <section class="relative bg-primary/10 overflow-hidden min-h-screen">
+    <!-- Background Video -->
     <div class="absolute inset-0 z-0">
-      <!-- Background video -->
-      <video autoplay loop muted class="object-cover w-full h-full opacity-30">
-        <source
-          src="{% static 'remove/videos/plant_care_video.mp4' %}"
-          type="video/mp4"
-        />
+      <video autoplay loop muted class="object-cover w-full h-full">
+        <source src="{% static 'videos/output_background_video.mp4' %}" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
 
-    <div
-      class="relative z-10 container mx-auto px-6 md:px-16 text-center text-white py-24 md:py-36"
-    >
-      <h1 class="text-5xl md:text-6xl font-bold text-shadow mb-6 leading-tight">
+    <!-- Content with Blending Mode -->
+    <div class="relative z-10 container mx-auto px-6 md:px-16 text-center py-24 md:py-36 mix-blend-difference">
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight text-white">
         Nurturing Nature, One Plant at a Time 🌿
       </h1>
-      <p
-        class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-shadow font-semibold"
-      >
+      <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-semibold text-white">
         Empowering communities and improving lives through sustainable plant
         care, bringing nature closer to you.
       </p>
 
+      <!-- Buttons -->
       <div class="flex justify-center space-x-6">
-        <a
-          href="{% url 'store:catalog' %}"
-          class="bg-secondary text-white px-8 py-4 rounded-full hover:bg-secondary/90 transition duration-300 shadow-lg transform hover:scale-105"
-        >
+        <a href="{% url 'store:categoryes' %}"
+          class="bg-secondary text-white px-8 py-4 rounded-full hover:bg-secondary/90 transition duration-300 shadow-lg transform hover:scale-105">
           <i class="fas fa-seedling mr-2"></i> Start Growing Today
         </a>
-        <a
-          href="{% url 'core:mission' %}"
-          class="border-2 border-tertiary text-tertiary px-8 py-4 rounded-full hover:bg-tertiary/10 transition duration-300 transform hover:scale-105"
-        >
+        <a href="{% url 'core:mission' %}"
+          class="border-2 border-tertiary text-tertiary px-8 py-4 rounded-full hover:bg-tertiary/10 transition duration-300 transform hover:scale-105">
           <i class="fab fa-envira mr-2"></i> Join Our Green Mission
         </a>
       </div>
     </div>
   </section>
+
 
   <!-- Our Impact: Plant's Role in the World -->
   <section class="container mx-auto py-24 px-4">
@@ -63,11 +51,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
     <div class="grid md:grid-cols-3 gap-16">
       <!-- Mental Wellness -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/mental-wellness.jpg' %}"
-          alt="Mental Wellness"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/mental-wellness.jpg' %}" alt="Mental Wellness"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Mental & Physical Wellness 🌿
         </h3>
@@ -80,11 +65,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
 
       <!-- Ecosystem Restoration -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/ecosystem-restoration.jpg' %}"
-          alt="Ecosystem Restoration"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/ecosystem-restoration.jpg' %}" alt="Ecosystem Restoration"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Ecosystem Restoration 🌳
         </h3>
@@ -97,11 +79,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
 
       <!-- Sustainable Solutions -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/sustainable-solutions.jpg' %}"
-          alt="Sustainable Solutions"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/sustainable-solutions.jpg' %}" alt="Sustainable Solutions"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Sustainable Solutions 🌱
         </h3>
@@ -134,11 +113,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
     <div class="grid md:grid-cols-3 gap-16">
       <!-- Urban Living -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/urban-living.jpg' %}"
-          alt="Urban Living"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/urban-living.jpg' %}" alt="Urban Living"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Urban Living 🌿
         </h3>
@@ -151,11 +127,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
 
       <!-- Rural Spaces -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/rural-farming.jpg' %}"
-          alt="Rural Spaces"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/rural-farming.jpeg' %}" alt="Rural Spaces"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Rural & Agricultural Spaces 🌱
         </h3>
@@ -172,11 +145,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
 
       <!-- Global Accessibility -->
       <div class="p-8 text-center">
-        <img
-          src="{% static 'images/global-accessibility.jpg' %}"
-          alt="Global Accessibility"
-          class="w-full h-64 object-cover rounded-lg mb-6"
-        />
+        <img src="{% static 'images/global-accessibility.jpeg' %}" alt="Global Accessibility"
+          class="w-full h-64 object-cover rounded-lg mb-6" />
         <h3 class="text-2xl font-semibold text-secondary mb-4">
           Global Accessibility 🌏
         </h3>
@@ -200,10 +170,8 @@ Cultivating Connection Through Plants{% endblock %} {% block content %}
         strengthens our planet and nurtures well-being.
       </p>
       <div class="flex justify-center space-x-6">
-        <a
-          href="{% url 'store:plants' %}"
-          class="bg-primary text-white px-10 py-5 rounded-full hover:bg-primary/90 transition duration-300 transform hover:scale-105"
-        >
+        <a href="{% url 'store:categoryes' %}"
+          class="bg-primary text-white px-10 py-5 rounded-full hover:bg-primary/90 transition duration-300 transform hover:scale-105">
           <i class="fas fa-seedling mr-2"></i> Explore Our Collection
         </a>
       </div>

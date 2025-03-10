@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10 px-4 lg:px-0">
+  <h1 class="text-3xl font-bold text-red-600 text-center mb-8">Error</h1>
+
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <p class="text-lg text-gray-800">{{ message }}</p>
+  </div>
+
+  <div class="mt-8 flex justify-center">
+    <a href="{% url 'store:home' %}"
+      class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+      Return to Home
+    </a>
+  </div>
+</div>
+{% endblock %}

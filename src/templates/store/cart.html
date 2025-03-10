@@ -1,0 +1,158 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-8 bg-gradient-to-br from-primary-light via-white to-primary-light">
+  <!-- Cart Header -->
+  <h1 class="text-3xl lg:text-4xl font-bold text-darkBrown text-center mb-10">Shopping Cart</h1>
+
+  <div class="flex flex-col lg:flex-row gap-8 max-w-screen-xl mx-auto">
+    <!-- Cart Items Section -->
+    <div class="w-full lg:w-3/4 bg-white rounded-lg p-6 border border-gray-200">
+      <div class="flex justify-between border-b pb-4 mb-6">
+        <h2 class="text-xl lg:text-2xl font-semibold text-darkBrown">Your Items</h2>
+        <h2 class="text-lg lg:text-xl font-medium text-gray-600">{{ cart_items|length }} Items</h2>
+      </div>
+
+      <!-- Cart Items -->
+      {% for item in cart_items %}
+      <div class="flex flex-wrap items-center border-b py-4">
+        <!-- Product Image -->
+        <div class="w-[80px] h-[80px] flex-shrink-0">
+          {% if item.plant.image %}
+          <img src="{{ item.plant.image.url }}" alt="{{ item.plant.title }}"
+            class="rounded-lg object-cover w-full h-full" />
+          {% else %}
+          <img src="{% static 'images/default_plant.png' %}" alt="No Image Available" class="rounded-lg object-cover">
+          {% endif %}
+        </div>
+
+        <!-- Product Details -->
+        <div class="flex-grow px-4">
+          <h3 class="text-base lg:text-lg font-bold text-darkBrown">{{ item.plant.title }}</h3>
+          <p class="text-sm text-gray-500">{{ item.plant.category.name }}</p>
+          <a href="#" class="text-red-500 text-sm hover:underline remove-from-cart" data-plant-id="{{ item.plant.id }}">
+            Remove
+          </a>
+        </div>
+
+        <!-- Quantity Input -->
+        <div class="w-[100px] text-center">
+          <input type="number" value="{{ item.quantity }}" min="1"
+            class="quantity-input border rounded-md text-center w-full py-1" data-plant-id="{{ item.plant.id }}">
+        </div>
+
+        <!-- Price and Total -->
+        <div class="w-[100px] text-right">
+          <p class="text-sm font-medium text-gray-700">₹{{ item.plant.price }}</p>
+          <p class="text-sm font-semibold text-darkBrown">₹{{ item.total_price }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Continue Shopping Button -->
+      <a href="/" class="inline-flex items-center mt-6 text-primary hover:text-secondary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="w-4 h-4 mr-2">
+          <path
+            d="M11.354 8.354a.5.5 0 0 1-.708 0L8 5.707l-2.646 2.647a.5.5 0 0 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708z" />
+        </svg>
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- Order Summary Section -->
+    <div id="summary" class="w-full lg:w-1/4 bg-white rounded-lg p-6 border border-gray-200">
+      <h2 class="text-xl font-bold border-b pb-4 mb-6 text-darkBrown">Order Summary</h2>
+
+      <!-- Subtotal -->
+      <div class="flex justify-between mb-4">
+        <span class="text-gray-600 font-medium">Items ({{ cart_items|length }})</span>
+        <span class="font-semibold">₹{{ subtotal }}</span>
+      </div>
+
+      <!-- Shipping Options -->
+      <label for="shipping" class="block mb-2 text-gray-600 font-medium">Shipping</label>
+      <select id="shipping" name="shipping"
+        class="block w-full border rounded-md p-2 bg-gray-50 text-gray-600 focus:outline-none focus:ring focus:ring-primary mb-6">
+        <option>Standard Shipping - ₹50</option>
+      </select>
+
+      <!-- Promo Code -->
+      <label for="promo" class="block mb-2 text-gray-600 font-medium">Promo Code</label>
+      <input type="text" id="promo" placeholder="Enter your code"
+        class="block w-full border rounded-md p-2 bg-gray-50 focus:outline-none focus:ring focus:ring-primary mb-6">
+
+      <!-- Apply Button -->
+      <button
+        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md w-full transition duration-300 font-medium">
+        Apply Code
+      </button>
+
+      <!-- Total Cost -->
+      <div class="border-t mt-6 pt-4 flex justify-between items-center">
+        <span class="font-semibold text-gray-700 uppercase">Total</span>
+        <span class="font-bold text-xl text-darkBrown">₹{{ total }}</span>
+      </div>
+
+      <!-- Checkout Button -->
+      <a href="{% url 'store:checkout' %}"
+        class="bg-secondary hover:bg-primary text-white px-4 py-[14px] rounded-md w-full block text-center mt-[24px] transition duration-[300ms] font-medium uppercase shadow-md">
+        Proceed to Checkout
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    // Update Quantity
+    $('.quantity-input').on('change', function () {
+      var plantId = $(this).data('plant-id'); // Get plant ID from data attribute
+      var quantity = $(this).val(); // Get updated quantity
+
+      $.ajax({
+        url: `/store/cart/update/${plantId}/`, // Dynamically construct URL
+        type: 'POST',
+        data: {
+          quantity: quantity,
+          csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token
+        },
+        success: function (data) {
+          if (data.success) {
+            location.reload(); // Refresh page to reflect changes
+          }
+        },
+        error: function () {
+          console.error('Error updating cart.');
+        }
+      });
+    });
+
+    // Remove Item from Cart
+    $('.remove-from-cart').on('click', function (e) {
+      e.preventDefault();
+      var plantId = $(this).data('plant-id'); // Get plant ID from data attribute
+
+      $.ajax({
+        url: `/store/cart/remove/${plantId}/`, // Dynamically construct URL
+        type: 'POST',
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token
+        },
+        success: function (data) {
+          if (data.success) {
+            location.reload(); // Refresh page to reflect changes
+          }
+        },
+        error: function () {
+          console.error('Error removing item from cart.');
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

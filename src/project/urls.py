@@ -7,13 +7,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("apps.core.urls")),
     path("store/", include("apps.store.urls")),
-    path("account/", include("apps.account.urls")),
+    path("accounts/", include("apps.accounts.urls")),
     # path("tags/", include("apps.tags.urls")),
-    # not using two_factor authentication
-    # path("two_factor/", include(("two_factor.urls", "two_factor"))),
     path("__reload__/", include("django_browser_reload.urls")),
+    # path("two_factor/", include(("two_factor.urls", "two_factor"))), # not using two_factor authentication
 ]
 
-# Serve media files during development
 if settings.DEBUG:
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.BASE_DIR / "static"
+    )
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

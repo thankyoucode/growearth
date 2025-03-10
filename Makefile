@@ -22,7 +22,8 @@ help:
 	@echo "  migrate     - Create and apply database migrations"
 	@echo "  test        - Run project tests"
 	@echo "  lint        - Run code linting"
-	@echo "  clean       - Remove cached files and clean project"
+	@echo "  clean       - Remove cached files"
+	@echo "  full_clean  - Remove cached files and clean project"
 	@echo "  superuser   - Create superuser in django website to manage database"
 
 # Setup project environment
@@ -33,7 +34,14 @@ setup:
 	uv pip install -r requirements.txt
 	uv pip install -e .
 
-.PHONY: tailwind-install tailwind-start dev
+
+
+.PHONY: tailwind tailwind-install tailwind-start dev
+
+# Tailwind CSS Build
+tailwind:
+	@echo "$(GREEN)Building Tailwind CSS...$(NC)"
+	cd $(SRC_DIR) && npx tailwindcss -i ./static/src/input.css -o ./static/css/tailwind.css
 
 # Install Tailwind
 tailwind-build:
@@ -50,6 +58,13 @@ dev:
 	@echo "$(GREEN)Starting Development Server...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py tailwind runserver 0.0.0.0:8000
 
+# Create Superuser
+.PHONY: superuser
+superuser:
+	@echo "$(GREEN)Creating Django Superuser...$(NC)"
+	cd $(SRC_DIR) && $(PYTHON) manage.py createsuperuser
+
+
 # Database Migrations
 .PHONY: migrate
 migrate:
@@ -57,6 +72,14 @@ migrate:
 	cd $(SRC_DIR) && $(PYTHON) manage.py makemigrations
 	cd $(SRC_DIR) && $(PYTHON) manage.py migrate
 
+
+.PHONY: populate_store
+populate_store:
+	@echo "$(GREEN)Populate store...$(NC)"
+	cd $(SRC_DIR) && $(PYTHON) manage.py collectstatic --noinput
+	cd $(SRC_DIR) && $(PYTHON) manage.py populate_store
+
+ 
 # Run Tests
 .PHONY: test
 test:
@@ -80,18 +103,19 @@ clean:
 	find . -type f -name "*.pyd" -delete
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
 	find . -type d -name ".coverage" -exec rm -rf {} +
+
+
+# Clean Full Project with database and database used images
+.PHONY: full_clean
+clean:
+	@echo "$(GREEN)Cleaning project...$(NC)"
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+	find . -type f -name "*.pyo" -delete
+	find . -type f -name "*.pyd" -delete
+	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	find . -type d -name ".coverage" -exec rm -rf {} +
 	rm -rf src/static/css/tailwind.css
-
-# touch src/static/css/tailwind.css
-
-# Create Superuser
-.PHONY: superuser
-superuser:
-	@echo "$(GREEN)Creating Django Superuser...$(NC)"
-	cd $(SRC_DIR) && $(PYTHON) manage.py createsuperuser
-
-# Tailwind CSS Build
-.PHONY: tailwind
-tailwind:
-	@echo "$(GREEN)Building Tailwind CSS...$(NC)"
-	cd $(SRC_DIR) && npx tailwindcss -i ./static/src/input.css -o ./static/css/tailwind.css
+	rm -rf src/db.sqlite3
+	rm -rf src/media/category_images/*
+	rm -rf src/media/plant_images/*

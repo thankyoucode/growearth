@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+Plant Detail - {{ plant.title }}
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-8 mb-8 bg-gradient-to-br from-green-50 via-white to-green-100">
+  <!-- Plant Title -->
+  <h1 class="text-5xl font-bold text-bamboo-green text-center mb-8 drop-shadow-md" data-aos="fade-down"
+    data-aos-duration="800">
+    {{ plant.title }}
+  </h1>
+
+  <!-- Main Content Section -->
+  <div class="flex flex-col md:flex-row items-start gap-8 mb-8 max-w-screen-lg mx-auto">
+    <!-- Plant Image -->
+    {% if plant.image %}
+    <div class="w-full md:w-1/2">
+      <img loading="lazy" src="{{ plant.image.url }}" alt="{{ plant.title }}"
+        class="object-cover object-center w-full rounded-lg shadow-lg transition-transform duration-300 hover:scale-[1.02]" />
+    </div>
+    {% else %}
+    <div class="w-full md:w-1/2 rounded-lg bg-gray-200 h-[300px] flex items-center justify-center shadow-md">
+      <p class="text-gray-500">No image available for this plant.</p>
+    </div>
+    {% endif %}
+
+    <!-- Plant Details -->
+    <div class="w-full md:w-1/2">
+      <!-- Price and Details Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-bamboo-green" data-aos="fade-right" data-aos-duration="800">Details</h2>
+        <span class="text-xl font-semibold text-bamboo-green bg-green-100 px-4 py-2 rounded-lg shadow-sm">
+          ₹{{ plant.price }}
+        </span>
+      </div>
+
+      <!-- Description -->
+      <p class="text-gray-700 leading-relaxed mb-6" data-aos="fade-up" data-aos-duration="800">
+        {{ plant.description }}
+      </p>
+
+      <!-- Plant Attributes -->
+      <div class="space-y-4 text-gray-700" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+        <div>
+          <strong>Category:</strong>
+          <a href="{% url 'store:category_plants' plant.category.slug %}" class="text-bamboo-green hover:underline">
+            {{ plant.category.title }}
+          </a>
+        </div>
+
+        {% if plant.scientific_name %}
+        <div><strong>Scientific Name:</strong> {{ plant.scientific_name }}</div>
+        {% endif %}
+
+        {% if plant.care_difficulty %}
+        <div><strong>Care Difficulty:</strong> {{ plant.care_difficulty }}</div>
+        {% endif %}
+
+        {% if plant.sunlight_requirements %}
+        <div><strong>Sunlight Requirements:</strong> {{ plant.sunlight_requirements }}</div>
+        {% endif %}
+
+        {% if plant.water_frequency %}
+        <div><strong>Water Frequency:</strong> {{ plant.water_frequency }}</div>
+        {% endif %}
+
+        {% if plant.weight %}
+        <div><strong>Weight:</strong> {{ plant.weight }} kg</div>
+        {% endif %}
+
+        <div><strong>Inventory:</strong> {{ plant.inventory }}</div>
+
+        {% if plant.sale_price %}
+        <div>
+          <strong>Sale Price:</strong>
+          ₹{{ plant.sale_price }}
+          (Discount: {{ plant.discount_percentage|floatformat:0 }}%)
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button data-url="{% url 'store:add_to_cart' plant.id %}"
+        class="add-to-cart-button bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-full hover:from-green-500 hover:to-green-700 transition duration-300 shadow-md transform hover:scale-[1.05] active:scale-[0.95] font-medium mt-8">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <div class="text-center mt-12">
+    <a href="{% url 'store:category_plants' plant.category.slug %}"
+      class="bg-saffron px-6 py-3 rounded-full hover:bg-bamboo-light transition duration-300 shadow-md font-medium inline-block transform hover:scale-[1.05] active:scale-[0.95]">
+      Back to {{ plant.category.title }}
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block head %}
+<!-- Include AOS CSS for Animations -->
+<link rel="stylesheet" href="{% static 'css/aos.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<!-- Include AOS JavaScript for Animations -->
+<script src="{% static 'js/aos.js' %}"></script>
+<script>
+  // Initialize AOS Animations
+  AOS.init();
+
+  // AJAX Add to Cart
+  $(document).ready(function () {
+    $('.add-to-cart-button').click(function (e) {
+      e.preventDefault();
+      const url = $(this).data('url'); // Get the URL from the data attribute
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token
+        },
+        success: function () {
+          // Refresh the page to display server-side messages
+          location.reload();
+        },
+        error: function (xhr) {
+          // console.error('Error adding item to cart:', xhr.responseText); // Log error for debugging
+          location.reload(); // Optionally reload the page to show server-side error messages
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock %}

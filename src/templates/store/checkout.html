@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10 px-4 lg:px-0">
+  <!-- Page Title -->
+  <h1 class="text-4xl font-bold text-darkBrown text-center mb-10">Secure Checkout</h1>
+
+  <div class="flex flex-col lg:flex-row gap-10">
+    <!-- Order Summary Section -->
+    <div class="w-full lg:w-3/4 bg-white rounded-lg p-8 border border-gray-200">
+      <h2 class="text-2xl font-semibold text-darkBrown mb-8 border-b pb-4">Your Order</h2>
+
+      {% if cart_items %}
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-darkBrown uppercase text-sm tracking-wide">
+              <th class="px-5 py-3 text-left">Product</th>
+              <th class="px-5 py-3 text-center">Quantity</th>
+              <th class="px-5 py-3 text-center">Price (₹)</th>
+              <th class="px-5 py-3 text-center">Total (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr class="border-b hover:bg-gray-50 transition duration-200">
+              <!-- Product Details -->
+              <td class="px-5 py-3">
+                <div class="flex items-center">
+                  {% if item.plant.image %}
+                  <img src="{{ item.plant.image.url }}" alt="{{ item.plant.title }}"
+                    class="w-16 h-16 rounded-lg mr-4 object-cover">
+                  {% else %}
+                  <img src="{% static 'images/default_plant.png' %}" alt="No Image Available"
+                    class="w-16 h-16 rounded-lg mr-4 object-cover">
+                  {% endif %}
+                  <span class="text-darkBrown font-medium">{{ item.plant.title }}</span>
+                </div>
+              </td>
+
+              <!-- Quantity -->
+              <td class="px-5 py-3 text-center">{{ item.quantity }}</td>
+
+              <!-- Price -->
+              <td class="px-5 py-3 text-center text-gray-700">₹{{ item.plant.price|floatformat:2 }}</td>
+
+              <!-- Total Price -->
+              <td class="px-5 py-3 text-center text-gray-900 font-semibold">₹{{ item.total_price|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <!-- Empty Cart Message -->
+      <p class="text-center text-gray-600 mt-6">Your cart is empty. Go back to the store to add some plants to your
+        cart!</p>
+      {% endif %}
+    </div>
+
+    <!-- Order Details Section -->
+    <div class="w-full lg:w-1/4 bg-gray-50 rounded-lg p-8 border border-gray-200">
+      <!-- Order Summary -->
+      <h2 class="text-xl font-semibold text-darkBrown mb-6 border-b pb-4">Order Details</h2>
+
+      <!-- Subtotal, Shipping, and Total -->
+      <div class="mb-8 space-y-4">
+        <p class="flex justify-between items-center font-medium text-gray-700">
+          Subtotal:
+          <span>₹{{ subtotal|floatformat:2 }}</span>
+        </p>
+        <p class="flex justify-between items-center font-medium text-gray-700">
+          Shipping:
+          <span>₹{{ shipping_cost|floatformat:2 }}</span>
+        </p>
+        <p class="flex justify-between items-center font-bold text-xl text-darkBrown border-t pt-[12px]">
+          Total:
+          <span>₹{{ total|floatformat:2 }}</span>
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Place Order Button -->
+        <button type="submit"
+          class="w-full bg-primary hover:bg-secondary text-white font-bold py-[14px] rounded-md transition duration-[300ms] focus:outline-none focus:ring focus:ring-saffron mt-[24px]">
+          Place Order
+        </button>
+      </form>
+
+      <!-- Export to PDF Button (Visible After Order is Placed) -->
+      {% if order_placed %}
+      <a href="{% url 'store:export_order_pdf' order_id=order_id %}" target="_blank"
+        class="[24px] inline-block w-full bg-tertiary hover:bg-secondary text-white font-bold py-[14px] rounded-lg transition duration-[300ms] focus:outline-none focus:ring focus:ring-tertiary/50 text-center">
+        Download Invoice (PDF)
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Back to Cart Button -->
+<div class="flex justify-center my-8">
+  <a href="{% url 'store:cart' %}"
+    class="bg-saffron hover:bg-secondary text-darkBrown font-bold py-3 px-6 rounded-md transition duration-300 focus:outline-none focus:ring focus:ring-secondary">
+    Back to Cart
+  </a>
+</div>
+</div>
+{% endblock %}

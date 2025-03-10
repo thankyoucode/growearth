@@ -24,9 +24,9 @@
 
   <!-- Custom Scripts -->
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/jquery.js' %}"></script>
 
-
-  {% block extra_head %}{% endblock %}
+  {% block head %}{% endblock %}
 
   <style>
     [x-cloak] {
@@ -36,7 +36,6 @@
 </head>
 
 <body class="flex flex-col min-h-screen bg-gray-50" x-data="mainApp()">
-  
   {% include 'components/header.html' %}
 
   <main class="flex-grow">
@@ -47,21 +46,18 @@
     {% endblock %}
   </main>
 
-  {% include 'components/footer.html' %}
-
-  {% block scripts %}{% endblock %}
-
   {% include 'components/message_block.html' %}
 
+  {% include 'components/footer.html' %} {% block scripts %}{% endblock %}
   <script>
     function mainApp() {
       return {
         // Global Alpine.js data and methods
         init() {
           // Initialize global app logic
-          console.log('App Initialized');
-        }
-      }
+          console.log("App Initialized");
+        },
+      };
     }
   </script>
 </body>

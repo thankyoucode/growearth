@@ -97,25 +97,25 @@ def navigation_links(request):
     return {
         "auth_links": {
             "login": {
-                "url": "account:login",
+                "url": "accounts:login",
                 "label": _("Log In"),
                 "icon": "fa-sign-in",
                 "style": "secondary",
             },
             "register": {
-                "url": "account:register",
+                "url": "accounts:register",
                 "label": _("Sign Up"),
                 "icon": "fa-user-plus",
                 "style": "outline",
             },
             "logout": {
-                "url": "account:logout",
+                "url": "accounts:logout",
                 "label": _("Logout"),
                 "icon": "fa-sign-out",
                 "style": "danger",
             },
             "profile": {
-                "url": "account:profile",
+                "url": "accounts:profile",
                 "label": _("My Profile"),
                 "icon": "fa-user",
                 "style": "primary",
@@ -129,10 +129,10 @@ def navigation_links(request):
                 "active": request.path == reverse("core:home"),
             },
             {
-                "name": _("Plants"),
-                "url": "store:plants",
+                "name": _("Plants Category"),
+                "url": "store:categoryes",
                 "type": "single",
-                "active": request.path == reverse("store:plants"),
+                "active": request.path == reverse("store:categoryes"),
             },
             {
                 "name": _("Care Guide"),
@@ -159,8 +159,8 @@ def footer_context(request):
             "quick_links": [
                 {"name": _("Home"), "url": "core:home", "icon": "home-outline"},
                 {
-                    "name": _("Plant Catalog"),
-                    "url": "store:catalog",
+                    "name": _("Plant Categoryes"),
+                    "url": "store:categoryes",
                     "icon": "leaf-outline",
                 },
                 {

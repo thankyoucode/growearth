@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+Category Detail - {{ category.title }}
+{% endblock %}
+
+{% block head %}
+<!-- Include AOS CSS -->
+<link rel="stylesheet" href="{% static 'css/aos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-2 mb-8 bg-gradient-to-br from-green-50 via-white to-green-100">
+  <!-- Page Title -->
+  <h1 class="text-5xl font-extrabold text-center mt-8 mb-8 text-bamboo-green drop-shadow-md" data-aos="fade-down"
+    data-aos-duration="800">
+    {{ category.title }}
+  </h1>
+
+  <!-- Category Image and Description -->
+  <div class="flex flex-col items-center w-full mb-8 mx-auto max-w-2xl">
+    {% if category.image %}
+    <img loading="lazy" src="{{ category.image.url }}" alt="{{ category.title }}"
+      class="object-cover object-center rounded-lg w-full md:w-3/4 lg:w-2/3 shadow-lg transition-transform duration-300 hover:scale-[1.02]" />
+    {% else %}
+    <p class="text-center text-gray-500 text-sm">
+      No image available for this category.
+    </p>
+    {% endif %}
+
+    <p class="text-gray-700 mt-4 px-4 md:px-0 text-lg leading-relaxed">
+      {{ category.description }}
+    </p>
+  </div>
+
+  <!-- Additional Context for Category -->
+  <div class="max-w-screen-lg mx-auto px-4 py-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-xl font-bold text-bamboo-green mb-4">About This Category</h2>
+    <p class="text-gray-600 leading-relaxed">
+      Explore a curated selection of plants in the "{{ category.title }}" category. Perfect for enhancing your indoor or
+      outdoor spaces, these plants are chosen for their unique characteristics and suitability for various environments.
+      Whether you're looking for vibrant greenery or low-maintenance options, this category has something for everyone.
+    </p>
+  </div>
+
+  <!-- Plants Section -->
+  <h2 class="text-3xl font-bold text-bamboo-green mt-8 mb-4 text-center" data-aos="fade-up" data-aos-duration="800">
+    Plants in this Category
+  </h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for plant in plants %}
+    <!-- Plant Card -->
+    <div
+      class="border border-darkBrown shadow-lg rounded-lg overflow-hidden flex flex-col h-full w-full transition-transform duration-300 hover:scale-[1.02]"
+      data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ forloop.counter|add:100 }}">
+      <!-- Image Section -->
+      <div class="w-full h-auto">
+        {% if plant.image %}
+        <img loading="lazy" src="{{ plant.image.url }}" alt="{{ plant.title }}"
+          class="object-cover object-center w-full h-[400px] sm:h-[450px] md:h-[500px] transition-transform duration-300 hover:scale-[1.05]" />
+        {% else %}
+        <div class="h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
+          <p class="text-center text-gray-500 text-sm p-4">
+            No image available for this plant.
+          </p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Content Section -->
+      <div class="p-6 bg-white flex-grow flex flex-col justify-between">
+        <div>
+          <!-- Title and Price -->
+          <div class="flex justify-between items-center mb-2">
+            <h5 class="text-xl font-bold text-bamboo-green">{{ plant.title }}</h5>
+            <span class="text-lg font-semibold text-bamboo-green">₹{{ plant.price }}</span>
+          </div>
+
+          <!-- Description -->
+          <p class="text-gray-600 text-base leading-relaxed mb-4 text-justify line-clamp-3">
+            {{ plant.description }}
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <!-- Add to Cart Button -->
+          <a href="{% url 'store:add_to_cart' plant.id %}" data-url="{% url 'store:add_to_cart' plant.id %}"
+            class="add-to-cart-button bg-secondary text-black px-6 py-2 rounded-full flex items-center hover:bg-bamboo-light transition duration-300 shadow-md font-medium">
+            <img src="{% static 'images/add-to-cart.svg' %}" alt="Add to Cart" class="w-6 h-6 mr-2 add-to-cart-icon" />
+            Add to Cart
+          </a>
+
+          <!-- More Details Button -->
+          <a href="{% url 'store:plant' plant.id %}"
+            class="bg-saffron text-black px-6 py-2 rounded-full hover:bg-bamboo-light transition duration-300 shadow-md font-medium">
+            More Details
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Include AOS JavaScript -->
+<script src="{% static 'js/aos.js' %}"></script>
+<script>
+  // Initialize AOS Animations
+  AOS.init();
+
+  // AJAX Add to Cart
+  $(document).ready(function () {
+    $('.add-to-cart-button').click(function (e) {
+      e.preventDefault();
+      const url = $(this).data('url'); // Get the URL from the data attribute
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token
+        },
+        success: function () {
+          // Refresh the page to display server-side messages
+          location.reload();
+        },
+        error: function (xhr) {
+          // console.error('Error adding item to cart:', xhr.responseText); // Log error for debugging
+          location.reload(); // Optionally reload the page to show server-side error messages
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

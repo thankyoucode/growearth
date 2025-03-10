@@ -5,12 +5,12 @@ __pycache__/
 
 # Virtual Environment
 .uv/
+.venv/
 uv.lock
 
 # Django
 *.log
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 
 # Sensitive Information
@@ -19,12 +19,11 @@ db.sqlite3-journal
 !.env.example
 
 # Media and User-Uploaded Content
-src/media/
+
 # Helping script
 src/scripts/
 
 # Static Files
-src/static/css/tailwind.css
 src/static/dist/
 
 # Tailwind CSS
@@ -42,7 +41,6 @@ Thumbs.db
 
 # Logs, Databases and Backups
 logs/
-*.sqlite3
 database_backups/
 
 # Build and Distribution
@@ -57,9 +55,6 @@ build/
 # Temporary Files
 *.tmp
 *~
-
-# not used
-src/.gitignore
 
 # Documents
 docs/

@@ -1,0 +1,125 @@
+{% extends '../layout.html' %}
+{% load static %}
+{% block title %}Login - Grow Earth{% endblock %}
+{% block content %}
+<div class="relative flex justify-center items-center min-h-screen py-4 px-2 bg-cover bg-center bg-no-repeat"
+  style="background-image: url('{% static 'images/form_background.jpg' %}')">
+  <form id="loginForm" method="post" class="bg-white border border-gray-200 p-8 rounded-lg shadow-md w-full max-w-md">
+    {% csrf_token %}
+
+    <!-- Heading Section -->
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Login to Grow Earth</h2>
+      <p class="text-gray-500 mt-2 text-sm">
+        Access your plant care dashboard
+      </p>
+    </div>
+
+    <!-- Email Input -->
+    <div class="mb-4">
+      <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+        Email Address
+      </label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+    </div>
+
+    <!-- Password Input -->
+    <div class="mb-6">
+      <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+        Password
+      </label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password" class="w-full px-3 py-2 border border-gray-300 rounded-md 
+               focus:outline-none focus:ring-2 focus:ring-gray-200 
+               text-gray-900 placeholder-gray-400" />
+      <div class="error-message text-red-500 text-xs mt-1"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-gray-800 text-white py-2.5 rounded-md 
+             hover:bg-gray-700 transition-colors duration-200 
+             focus:outline-none focus:ring-2 focus:ring-gray-500">
+      Sign In
+    </button>
+
+    <!-- Alternative Action Links -->
+    <div class="flex justify-between mt-4">
+      <a href="/reset/password/" class="text-gray-600 hover:text-gray-800 text-sm">
+        Forgot password?
+      </a>
+      <a href="{% url 'accounts:register' %}" class="text-gray-600 hover:text-gray-800 text-sm">
+        Create account
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    function showError(input, message) {
+      const errorElement = input.nextElementSibling;
+      errorElement.textContent = message;
+      input.classList.add('border-red-500');
+    }
+
+    function clearError(input) {
+      const errorElement = input.nextElementSibling;
+      errorElement.textContent = "";
+      input.classList.remove('border-red-500');
+    }
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    [emailInput, passwordInput].forEach(input => {
+      input.addEventListener("input", function () {
+        clearError(this);
+
+        if (this === emailInput) {
+          if (this.value.trim() === "") {
+            showError(this, "Email is required");
+          } else if (!validateEmail(this.value)) {
+            showError(this, "Invalid email format");
+          }
+        }
+
+        if (this === passwordInput) {
+          if (this.value.trim() === "") {
+            showError(this, "Password is required");
+          } else if (this.value.length < 8) {
+            showError(this, "Password must be at least 8 characters");
+          }
+        }
+      });
+    });
+
+    form.addEventListener("submit", function (event) {
+      let valid = true;
+
+      if (emailInput.value.trim() === "" || !validateEmail(emailInput.value)) {
+        showError(emailInput, "Please enter a valid email");
+        valid = false;
+      }
+
+      if (passwordInput.value.trim() === "" || passwordInput.value.length < 8) {
+        showError(passwordInput, "Password must be at least 8 characters");
+        valid = false;
+      }
+
+      if (!valid) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock %}

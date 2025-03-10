@@ -65,7 +65,7 @@ class EmailVerificationService:
         cls,
         user: Union[AbstractBaseUser, AbstractUser],
         code: str,
-        email_template: str = "account/configer/verification_code_email.html",
+        email_template: str = "accounts/configer/verification_code_email.html",
     ) -> bool:
         """
         Send verification email with HTML template
