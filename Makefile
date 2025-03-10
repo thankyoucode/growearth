@@ -8,7 +8,7 @@ MANAGE := $(SRC_DIR)/manage.py
 PYTHON := uv run python
 VENV := .uv
 
-# Colors
+# Colors for output
 GREEN := \033[0;32m
 NC := \033[0m
 
@@ -24,7 +24,9 @@ help:
 	@echo "  lint        - Run code linting"
 	@echo "  clean       - Remove cached files"
 	@echo "  full_clean  - Remove cached files and clean project"
-	@echo "  superuser   - Create superuser in django website to manage database"
+	@echo "  superuser   - Create superuser in Django website to manage database"
+	@echo "  tailwind    - Build Tailwind CSS"
+	@echo "  tailwind-watch - Start Tailwind CSS compilation in watch mode"
 
 # Setup project environment
 .PHONY: setup
@@ -34,36 +36,34 @@ setup:
 	uv pip install -r requirements.txt
 	uv pip install -e .
 
-
-
-.PHONY: tailwind tailwind-install tailwind-start dev
-
 # Tailwind CSS Build
+.PHONY: tailwind tailwind-install tailwind-watch
+
 tailwind:
 	@echo "$(GREEN)Building Tailwind CSS...$(NC)"
-	cd $(SRC_DIR) && npx tailwindcss -i ./static/src/input.css -o ./static/css/tailwind.css
-
-# Install Tailwind
-tailwind-build:
-	@echo "$(GREEN)Installing Tailwind CSS...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py tailwind build
 
-# Start Tailwind Compilation
+# Start Tailwind Compilation in watch mode
 tailwind-watch:
 	@echo "$(GREEN)Starting Tailwind CSS Compilation...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py tailwind watch
 
 # Development Server
+.PHONY: dev run
+
 dev:
 	@echo "$(GREEN)Starting Development Server...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py tailwind runserver 0.0.0.0:8000
+
+run:
+	@echo "$(GREEN)Starting Server...$(NC)"
+	cd $(SRC_DIR) && $(PYTHON) manage.py runserver 0.0.0.0:8000
 
 # Create Superuser
 .PHONY: superuser
 superuser:
 	@echo "$(GREEN)Creating Django Superuser...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py createsuperuser
-
 
 # Database Migrations
 .PHONY: migrate
@@ -72,14 +72,13 @@ migrate:
 	cd $(SRC_DIR) && $(PYTHON) manage.py makemigrations
 	cd $(SRC_DIR) && $(PYTHON) manage.py migrate
 
-
+# Populate Store (collect static files and other tasks)
 .PHONY: populate_store
 populate_store:
-	@echo "$(GREEN)Populate store...$(NC)"
+	@echo "$(GREEN)Populating store...$(NC)"
 	cd $(SRC_DIR) && $(PYTHON) manage.py collectstatic --noinput
 	cd $(SRC_DIR) && $(PYTHON) manage.py populate_store
 
- 
 # Run Tests
 .PHONY: test
 test:
@@ -93,7 +92,7 @@ lint:
 	ruff check $(SRC_DIR)
 	black --check $(SRC_DIR)
 
-# Clean Project
+# Clean Project (remove cached files)
 .PHONY: clean
 clean:
 	@echo "$(GREEN)Cleaning project...$(NC)"
@@ -104,18 +103,12 @@ clean:
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
 	find . -type d -name ".coverage" -exec rm -rf {} +
 
-
-# Clean Full Project with database and database used images
+# Full Clean Project (remove all cached files and reset database)
 .PHONY: full_clean
-clean:
-	@echo "$(GREEN)Cleaning project...$(NC)"
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
-	find . -type f -name "*.pyo" -delete
-	find . -type f -name "*.pyd" -delete
-	find . -type d -name ".pytest_cache" -exec rm -rf {} +
-	find . -type d -name ".coverage" -exec rm -rf {} +
-	rm -rf src/static/css/tailwind.css
-	rm -rf src/db.sqlite3
-	rm -rf src/media/category_images/*
-	rm -rf src/media/plant_images/*
+full_clean: clean
+	@echo "$(GREEN)Performing full clean of the project...$(NC)"
+	rm -rf src/static/css/tailwind.css      # Remove generated Tailwind CSS file
+	rm -rf src/db.sqlite3                   # Remove SQLite database file
+	rm -rf src/media/category_images/*       # Remove category images from media folder
+	rm -rf src/media/plant_images/*          # Remove plant images from media folder
+

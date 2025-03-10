@@ -20,19 +20,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_tailwind_cli",
+    "fontawesomefree",
     # Project Apps (Full Python Path)
     "apps.core.apps.CoreConfig",
     "apps.store.apps.StoreConfig",
     "apps.tags.apps.TagsConfig",
     "apps.accounts.apps.AccountsConfig",
-    # Third-Party
-    "django_tailwind_cli",
-    "fontawesomefree",
-    # Optional: Simple Email-Based Authentication
-    # "django_otp",
-    # "django_otp.plugins.otp_totp",
-    # "two_factor",
-    # "phonenumbers",
 ]
 
 
@@ -44,7 +38,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "django_otp.middleware.OTPMiddleware",
     "apps.store.middleware.merge_cart.MergeCartMiddleware",
 ]
 
@@ -136,3 +129,5 @@ DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 
 # Authentication Model that use in templates and login, register
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# TAILWIND_CLI_PATH = "src/static/tailwindcss"

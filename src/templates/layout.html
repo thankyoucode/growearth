@@ -8,7 +8,12 @@
   <meta name="description" content="Grow Earth - Green Your Space, a platform to green your environment." />
   <meta name="keywords" content="Grow Earth, Green, Environment, Plants, Gardening" />
   <title>{% block title %}Grow Earth - Green Your Space{% endblock %}</title>
+
   <link rel="icon" type="image/ico" href="{% static 'favicon.ico' %}" />
+
+  <!-- Alpine.js -->
+  <script defer src="{% static 'js/alpine.min.js' %}"></script>
+
 
   <!-- Our project just needs Font Awesome Free's Solid and Brand files -->
   <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css" />
@@ -16,11 +21,9 @@
   <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css" />
 
   <!-- Tailwind CSS -->
-  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+  <link rel="stylesheet" href="{% static 'css/source.css' %}" />
 
-  <!-- Alpine.js -->
-  <script defer src="{% static 'js/alpine.min.js' %}"></script>
-  <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
 
   <!-- Custom Scripts -->
   <script src="{% static 'js/main.js' %}"></script>

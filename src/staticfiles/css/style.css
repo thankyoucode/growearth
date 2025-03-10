@@ -1,0 +1,30 @@
+/* Hamburger Icon Transitions (Lines to X) */
+.hamburger .line {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger to cross effect */
+.hamburger.open .line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobile Menu Slide-In Animation */
+#mobile-menu {
+  transition: transform 0.5s ease-in-out;
+}
+
+#mobile-menu.translate-x-full {
+  transform: translateX(100%); /* Initially offscreen (to the right) */
+}
+
+#mobile-menu.translate-x-0 {
+  transform: translateX(0); /* Slide in from the right */
+}

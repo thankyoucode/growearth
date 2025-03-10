@@ -2258,10 +2258,6 @@
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
   }
-  .text-9xl {
-    font-size: var(--text-9xl);
-    line-height: var(--tw-leading, var(--text-9xl--line-height));
-  }
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
@@ -2399,9 +2395,6 @@
   }
   .text-black {
     color: var(--color-black);
-  }
-  .text-blue-900 {
-    color: var(--color-blue-900);
   }
   .text-darkBrown {
     color: var(--color-darkBrown);

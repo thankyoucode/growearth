@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
+@theme {
+  --color-primary: #a2a915;
+  --color-secondary: #547131;
+  --color-tertiary: #6c92b6;
+  --color-saffron: #edc363;
+  --color-darkBrown: #3f3929;
+  --color-alert-success: #48bb78;
+  --color-alert-error: #f56565;
+  --color-alert-warning: #ecc94b;
+  --color-alert-info: #4299e1;
+  --color-alert-text": #ffffff;
+}

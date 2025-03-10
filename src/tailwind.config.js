@@ -1,12 +1,10 @@
 module.exports = {
   content: [
-    "./templates/**/*.html",
-    "./app/**/*.html",
-    "./**/*.html",
-    "./app/**/*.py",
-    "./**/*.py",
-    "./static/src/input.css",
-    "./static/js/*.js",
+    "./templates/**/*.html", // Include all HTML templates
+    "./apps/**/*.html", // Include app-specific templates
+    "./static/js/**/*.js", // Include JavaScript files in static
+    "./src/static/**/*.css", // Include CSS files in static/src
+    "./**/*.py", // Include Python files for inline classes
   ],
   theme: {
     extend: {
@@ -25,20 +23,6 @@ module.exports = {
       },
       textColor: {
         "alert-text": "#ffffff",
-      },
-      animation: {
-        "slide-in": "slideIn 0.3s ease-out",
-        "slide-out": "slideOut 0.3s ease-in",
-      },
-      keyframes: {
-        slideIn: {
-          "0%": { transform: "translateX(100%)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        slideOut: {
-          "0%": { transform: "translateX(0)", opacity: "1" },
-          "100%": { transform: "translateX(100%)", opacity: "0" },
-        },
       },
     },
   },
