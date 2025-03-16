@@ -13,7 +13,6 @@ urlpatterns = [
         name="category_plants",
     ),
     path("category/plant/detail/<uuid:id>/", views.plant_view, name="plant"),
-    path("care-guide/", views.care_guide_view, name="care_guide"),
     path("cart/", views.cart_view, name="cart"),
     path("cart/update/<uuid:plant_id>/", views.update_cart_view, name="update_cart"),
     path(

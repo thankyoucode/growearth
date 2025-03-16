@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Returns & Refunds - Grow Earth
+{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-16 px-6 md:px-16">
+  <div class="container mx-auto max-w-4xl">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-secondary mb-6">Returns & Refunds 🌿</h1>
+      <p class="text-lg text-darkBrown mb-8">We aim to ensure your satisfaction with every purchase. If you're not happy
+        with your order, here's everything you need to know about our return and refund policy.</p>
+    </div>
+
+    <!-- Return Policy Section -->
+    <div class="p-8 rounded-lg shadow-md border border-primary mb-12">
+      <h2 class="text-2xl font-bold text-secondary mb-6">Our Return Policy</h2>
+      <p class="text-darkBrown leading-relaxed mb-4">
+        At Grow Earth, we take pride in delivering healthy plants and quality products. However, if you’re not satisfied
+        with your purchase, you can initiate a return or replacement under the following conditions:
+      </p>
+      <ul class="list-disc pl-5 space-y-3 text-darkBrown">
+        <li>Plants or products must be returned within <span class="font-medium">7 days</span> of delivery.</li>
+        <li>The item must be in its original condition, including packaging and labels.</li>
+        <li>For damaged or defective items, please provide photos as proof within <span class="font-medium">48
+            hours</span> of delivery.</li>
+        <li>Items purchased on sale or clearance are not eligible for returns unless they arrive damaged.</li>
+      </ul>
+    </div>
+
+    <!-- Replacement Policy Section -->
+    <div class="p-8 rounded-lg shadow-md border border-primary mb-12">
+      <h2 class="text-2xl font-bold text-secondary mb-6">Replacement Policy</h2>
+      <p class="text-darkBrown leading-relaxed mb-4">
+        If your plant or product arrives damaged or defective, we offer a hassle-free replacement policy:
+      </p>
+      <ul class="list-disc pl-5 space-y-3 text-darkBrown">
+        <li><span class="font-medium">48-Hour Replacement Guarantee:</span> Notify us within 48 hours of receiving the
+          item with clear photos of the damage.</li>
+        <li>We will replace the item free of charge or provide store credit if a replacement is unavailable.</li>
+        <li>Replacements are subject to stock availability and shipping timelines.</li>
+      </ul>
+    </div>
+
+    <!-- Refund Policy Section -->
+    <div class="p-8 rounded-lg shadow-md border border-primary mb-12">
+      <h2 class="text-2xl font-bold text-secondary mb-6">Refund Policy</h2>
+      <p class="text-darkBrown leading-relaxed mb-4">
+        Refunds are processed under the following conditions:
+      </p>
+      <ul class="list-disc pl-5 space-y-3 text-darkBrown">
+        <li>If the returned item meets our return policy criteria, we will issue a refund within <span
+            class="font-medium">7 business days</span>.</li>
+        <li>Refunds will be credited to the original payment method (e.g., card, UPI) or as store credit upon request.
+        </li>
+        <li>Shipping charges are non-refundable unless the return is due to our error (e.g., wrong item shipped).</li>
+      </ul>
+    </div>
+
+    <!-- How to Initiate a Return Section -->
+    <div class="p-8 rounded-lg shadow-md border border-primary mb-12">
+      <h2 class="text-2xl font-bold text-secondary mb-6">How to Initiate a Return</h2>
+      <p class="text-darkBrown leading-relaxed mb-4">
+        Follow these simple steps to initiate a return or replacement:
+      </p>
+      <ol class="list-decimal pl-5 space-y-3 text-darkBrown">
+        <li>Contact our support team at <a href="mailto:support@growearth.com"
+            class="text-primary hover:text-secondary">support@growearth.com</a>.</li>
+        <li>Provide your order number and details about the issue (e.g., photos of damage).</li>
+        <li>Our team will review your request and provide further instructions within 24 hours.</li>
+        <li>Pack the item securely in its original packaging and send it to the address provided by our team.</li>
+      </ol>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="mt-12 text-center">
+      <p class="text-darkBrown mb-4">Still have questions about returns or refunds?</p>
+      <a href="/contact/"
+        class="inline-block bg-primary text-white px-[20px] py-[14px] rounded-lg hover:bg-secondary transition duration-[300ms] ease-in-out">
+        Contact Support
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

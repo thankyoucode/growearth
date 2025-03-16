@@ -2,28 +2,25 @@ import os
 
 from .base import *
 
-# Plantion Security
-DEBUG = False
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+# Security Settings
+DEBUG = False  # Debug is False for testing production-like behavior locally
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
-# Database Configuration
+# Database Configuration (using SQLite for local development)
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST", "localhost"),
-        "PORT": os.getenv("DB_PORT", "5432"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
-# Security Enhancements
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# Security Enhancements (Disable SSL-related settings for local development)
+SECURE_SSL_REDIRECT = False  # Disable SSL redirect for local testing
+SESSION_COOKIE_SECURE = False  # Allow cookies over HTTP
+CSRF_COOKIE_SECURE = False  # Allow CSRF cookies over HTTP
+SECURE_HSTS_SECONDS = 0  # Disable HSTS for local development
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False  # Disable HSTS for subdomains
+SECURE_HSTS_PRELOAD = False  # Disable HSTS preload
 
 # Logging Configuration
 LOGGING = {

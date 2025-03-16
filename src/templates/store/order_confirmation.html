@@ -19,11 +19,11 @@
     <h3 class="text-lg font-semibold text-gray-800 mt-6">Items:</h3>
     <ul class="list-disc pl-6">
       {% for item in order_items %}
-      <li>{{ item.quantity }} x {{ item.plant.title }} - ${{ item.price }}</li>
+      <li>{{ item.quantity }} x {{ item.plant.title }} - ₹{{ item.price }}</li>
       {% endfor %}
     </ul>
 
-    <p class="mt-4"><strong>Total Price:</strong> ${{ order.total_price }}</p>
+    <p class="mt-4"><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
   </div>
 
   <div class="py-8 flex justify-center">

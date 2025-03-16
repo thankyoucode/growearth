@@ -21,7 +21,9 @@ def select_settings():
     if os.environ.get("DJANGO_SETTINGS_MODULE"):
         return os.environ["DJANGO_SETTINGS_MODULE"]
 
-    env = os.getenv("DJANGO_ENV", "development").lower()
+    runat = "development"
+
+    env = os.getenv("DJANGO_ENV", runat).lower()
 
     SETTINGS_MODULES = {
         "development": "project.settings.development",
@@ -30,7 +32,7 @@ def select_settings():
         "staging": "project.settings.staging",
     }
 
-    selected_settings = SETTINGS_MODULES.get(env, "project.settings.development")
+    selected_settings = SETTINGS_MODULES.get(env, f"project.settings.{runat}")
 
     # Optional: Add logging
     print(f"🔧 Loading {env.upper()} settings: {selected_settings}")

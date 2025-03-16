@@ -1,20 +1,43 @@
+from pathlib import Path
+from pyexpat.errors import messages
+
 from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model, login, logout
+
+# from django.contrib import messages
+from django.contrib.auth import (
+    authenticate,
+    get_user_model,
+    login,
+    logout,
+    update_session_auth_hash,
+)
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.translation import gettext as _
+from dotenv import load_dotenv
 
 from .._utils.message import MessageService
+from ..store.models import Order
 
 # Import your custom forms
 from .forms import (
+    ChangePasswordForm,
+    EditProfileForm,
     UserLoginForm,
+    UserOpinionForm,
     UserRegistrationForm,
 )
+from .models import UserOpinion
 from .tokens import account_activation_token
+
+# Core Project Configuration
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+load_dotenv()
 
 
 def direct_register_view(request):
@@ -56,8 +79,16 @@ def logout_view(request):
     return redirect("accounts:login")
 
 
+@login_required
 def profile_view(request):
-    return render(request, "accounts/profile.html")
+    user = request.user  # Get the currently logged-in user
+    orders = user.orders.all()  # Fetch all orders related to the user
+
+    context = {
+        "user": user,
+        "orders": orders,  # Pass orders to the template
+    }
+    return render(request, "accounts/profile.html", context)
 
 
 def activate(request, uidb64, token):
@@ -115,39 +146,86 @@ def activateEmail(request, user, to_email):
         )
 
 
-# def register_view(request):
-#     form = UserRegistrationForm(request.POST, request.FILES)
-#     if request.method == "POST":
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.is_active = False
-#             user.save()
+@login_required
+def edit_profile_view(request):
+    if request.method == "POST":
+        profile_form = EditProfileForm(request.POST, instance=request.user)
+        password_form = ChangePasswordForm(request.user, request.POST)
 
-#             activateEmail(request, user, form.cleaned_data.get("email"))
-#             return redirect("home")
+        if profile_form.is_valid():
+            profile_form.save()
+            MessageService.success(
+                request, "Your profile has been updated successfully!"
+            )
+            return redirect("accounts:profile")
 
-#         else:
-#             # Show error messages
-#             for field in form.errors:
-#                 MessageService.error(
-#                     request, f"{field.capitalize()} - {form.errors[field]}"
-#                 )
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Important!
+            MessageService.success(
+                request, "Your password has been updated successfully!"
+            )
+            return redirect("accounts:profile")
+        else:
+            for error in list(password_form.errors.values()):
+                MessageService.error(
+                    request, error[0]
+                )  # Display each password form error
 
-#     else:
-#         return render(request, "accounts/register.html", {"form": form})
+            MessageService.error(request, "Please correct the errors below.")
+
+    else:
+        profile_form = EditProfileForm(instance=request.user)
+        password_form = ChangePasswordForm(request.user)
+
+    context = {
+        "profile_form": profile_form,
+        "password_form": password_form,
+    }
+    return render(request, "accounts/edit_profile.html", context)
 
 
-# def login_view(request):
-#     form = UserLoginForm(request.POST)
-#     if request.method == "POST":
-#         if form.is_valid():
-#             user = authenticate(request, **form.cleaned_data)
+@login_required
+def delete_account_view(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()  # Delete the user account
+        MessageService.success(request, "Your account has been deleted successfully.")
+        return redirect("home")  # Redirect to home or login page after deletion
 
-#             if user:
-#                 MessageService.success(request, f"Welcome, {user.username}!")
-#                 login(request, user)
-#                 return redirect("dashboard")
-#             else:
-#                 MessageService.error(request, "Invalid login credentials")
+    # No GET handling needed since confirmation is done via modal
 
-#     return render(request, "accounts/login.html", {"form": form})
+
+@login_required
+def submit_opinion(request):
+    if request.method == "POST":
+        form = UserOpinionForm(request.POST)
+        if form.is_valid():
+            opinion = form.save(commit=False)
+            opinion.user = request.user
+            # If no rating is provided, set it to None
+            if not request.POST.get("rating"):
+                opinion.rating = None
+            else:
+                opinion.rating = request.POST.get("rating")
+            opinion.save()
+
+            return redirect("accounts:review_list")
+        else:
+            return render(
+                request,
+                "accounts:review_list",
+                {"form": form, "reviews": UserOpinion.objects.filter(is_review=True)},
+            )
+    else:
+        return redirect("accounts:review_list")
+
+
+def review_list(request):
+    reviews = UserOpinion.objects.filter(is_review=True)
+    form = UserOpinionForm()
+    for review in reviews:
+        review.star_list = range(
+            review.rating
+        )  # Generate a list of stars based on the rating
+    return render(request, "accounts/review.html", {"reviews": reviews, "form": form})

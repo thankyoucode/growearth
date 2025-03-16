@@ -1,0 +1,166 @@
+{% extends '../layout.html' %}
+{% load static %}
+{% block title %}
+Grow Earth: Comprehensive Plant Care Guide
+{% endblock %}
+{% block content %}
+<div class="bg-white">
+  <!-- Hero Section -->
+  <section class="bg-primary/10 py-16">
+    <div class="container mx-auto text-center">
+      <video autoplay loop muted class="w-full h-auto max-w-xl mx-auto rounded-lg shadow-lg mb-8">
+        <source src="{% static 'videos/plant-care.mp4' %}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <h1 class="text-4xl md:text-5xl font-bold text-secondary mb-6">
+        The Ultimate Plant Care Guide 🌱
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto font-semibold text-darkBrown mb-8">
+        Learn everything you need to know to nurture your plants and create a thriving green space.
+      </p>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-3xl text-center px-6 md:px-0">
+      <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-6">Why Proper Plant Care Matters</h2>
+      <p class="text-lg text-darkBrown text-left mb-8">
+        Plants are living beings that require attention, care, and understanding. Proper care ensures healthy growth,
+        vibrant foliage, and a longer lifespan. This guide will help you master the art of plant care.
+      </p>
+    </div>
+  </section>
+
+  <!-- Detailed Care Sections -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto space-y-16 px-6 md:px-0 max-w-4xl"><!-- Watering Section -->
+      <div class="py-8">
+        <h3 class="text-2xl font-semibold text-secondary mb-4 text-left">Watering: The Lifeline of Plants 💧</h3>
+        <img src="{% static 'images/watering-plants.jpg' %}" alt="Watering Plants" loading="lazy"
+          class="w-full h-auto max-w-md mx-auto rounded-lg shadow-md mb-6" />
+        <p class="text-darkBrown mb-4 text-left">
+          Watering is one of the most critical aspects of plant care. Here's how to get it right:
+        </p>
+        <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+          <li>Check the soil moisture before watering; most plants prefer slightly dry soil.</li>
+          <li>Use room-temperature water to avoid shocking the roots.</li>
+          <li>Water early in the morning or late afternoon to minimize evaporation.</li>
+          <li>Avoid overwatering to prevent root rot.</li>
+        </ul>
+      </div>
+
+      <!-- Sunlight Section -->
+      <div class="py-8">
+        <h3 class="text-2xl font-semibold text-secondary mb-4 text-left">Sunlight: Finding the Right Balance ☀️</h3>
+        <img src="{% static 'images/sunlight-plants.jpg' %}" alt="Plants in Sunlight" loading="lazy"
+          class="w-full h-auto max-w-md mx-auto rounded-lg shadow-md mb-6" />
+        <p class="text-darkBrown mb-4 text-left">
+          Sunlight is essential for photosynthesis. Here's how to ensure your plants receive optimal sunlight:
+        </p>
+        <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+          <li>Place your plants in bright, indirect sunlight for best results.</li>
+          <li>Rotate your plants periodically for even light exposure.</li>
+          <li>Use sheer curtains to diffuse harsh sunlight for sensitive plants.</li>
+          <li>Monitor for signs of too much or too little light.</li>
+        </ul>
+      </div>
+
+      <!-- Soil Section -->
+      <div class="py-8">
+        <h3 class="text-2xl font-semibold text-secondary mb-4 text-left">Soil: The Foundation of Healthy Growth 🌱</h3>
+        <img src="{% static 'images/soil-quality.jpg' %}" alt="Quality Soil" loading="lazy"
+          class="w-full h-auto max-w-md mx-auto rounded-lg shadow-md mb-6" />
+        <p class="text-darkBrown mb-4 text-left">
+          The right soil provides nutrients and supports root systems. Here's what you need to know:
+        </p>
+        <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+          <li>Choose a potting mix tailored to your plant type.</li>
+          <li>Ensure proper drainage by using pots with holes.</li>
+          <li>Avoid compacted soil; loosen it occasionally.</li>
+          <li>Refresh or replace soil annually.</li>
+        </ul>
+      </div>
+
+      <!-- Fertilizing Section -->
+      <div class="py-8">
+        <h3 class="text-2xl font-semibold text-secondary mb-4 text-left">Fertilizing: Boosting Growth 🌼</h3>
+        <img src="{% static 'images/fertilizing-plants.jpg' %}" alt="Fertilizing Plants" loading="lazy"
+          class="w-full h-auto max-w-md mx-auto rounded-lg shadow-md mb-6" />
+        <p class="text-darkBrown mb-4 text-left">
+          Fertilizers provide essential nutrients. Proper fertilization promotes healthy growth:
+        </p>
+        <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+          <li>Use balanced fertilizers during the growing season.</li>
+          <li>Follow dosage instructions carefully.</li>
+          <li>Consider organic options for sustainable care.</li>
+          <li>Avoid fertilizing during dormant periods.</li>
+        </ul>
+      </div>
+
+      <!-- Pest Control Section -->
+      <div class="py-8">
+        <h3 class="text-2xl font-semibold text-secondary mb-4 text-left">Pest Control: Protecting Your Plants 🐞</h3>
+        <img src="{% static 'images/pest-control.jpg' %}" alt="Pest Control" loading="lazy"
+          class="w-full h-auto max-w-md mx-auto rounded-lg shadow-md mb-6" />
+        <p class="text-darkBrown mb-4 text-left">
+          Pests can harm your plants if left unchecked. Regular monitoring is key:
+        </p>
+        <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+          <li>Inspect leaves regularly for signs of pests.</li>
+          <li>Use natural remedies like neem oil for infestations.</li>
+          <li>Encourage beneficial insects like ladybugs.</li>
+          <li>Keep your plants clean by wiping leaves periodically.</li>
+        </ul>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- Final Tips Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-xl px-6 md:px-0">
+      <h2 class="text-xl md:text-xl font-bold text-secondary mb-8">Final Tips for Thriving Plants 🌿</h2>
+
+      <ul class="text-darkBrown list-disc list-inside space-y-1 text-left">
+        <li>Group plants with similar care requirements together.</li>
+        <li>Monitor humidity levels; many tropical plants thrive in higher humidity.</li>
+        <li>Prune dead or yellowing leaves regularly.</li>
+        <li>Be patient! Plants take time to adapt to new environments.</li>
+        <li>Research your specific plant species for unique needs.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Conclusion Section -->
+  <section class="bg-tertiary/10 py-24 flex justify-center items-center">
+    <div class="max-w-xl mx-auto text-center px-6 md:px-0">
+      <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-8">Join the Grow Earth Community 🌍</h2>
+      <p class="text-lg text-darkBrown mb-8">
+        We hope this guide helps you on your journey to becoming a successful plant parent. Remember, every plant has
+        its own story, and with the right care, you can nurture it to thrive. Happy growing!
+      </p>
+
+      <!-- Call-to-action Button -->
+      <a href="{% url 'store:categoryes' %}"
+        class="bg-primary text-white px-10 py-5 rounded-full hover:bg-primary/90 transition duration-300 transform hover:scale105 inline-block">
+        Explore Our Collection
+      </a>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- AOS (Animate On Scroll) Initialization -->
+<script src="{% static 'js/aos.js' %}"></script>
+
+<script>
+  // Initialize AOS
+  AOS.init({
+    duration: 600, // Animation duration in milliseconds
+  });
+</script>
+
+{% endblock %}

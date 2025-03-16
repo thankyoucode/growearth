@@ -1,0 +1,168 @@
+{% extends '../layout.html' %}
+{% load static %}
+{% block title %}
+About Us - Grow Earth: Cultivating Connection Through Plants
+{% endblock %}
+{% block content %}
+<div class="bg-white">
+  <!-- Hero Section -->
+  <section class="relative bg-primary/10 min-h-[60vh] flex items-center justify-center">
+    <div class="container mx-auto text-left py-16 px-6">
+      <h1 class="text-5xl md:text-6xl font-bold text-secondary mb-6">
+        About Us
+      </h1>
+      <p class="text-lg md:text-xl text-darkBrown max-w-3xl">
+        Welcome to Grow Earth, your trusted partner in bringing nature closer to you. We are on a mission to make life
+        healthier and more sustainable by cultivating connections through plants.
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Story Section -->
+  <section class="bg-gray-50 py-24 px-6 md:px-16">
+    <div class="container mx-auto text-left mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-6">Our Story 🌱</h2>
+      <p class="text-lg text-darkBrown max-w-3xl leading-relaxed">
+        Grow Earth was born out of a love for plants and a vision to make greenery accessible to everyone. Founded by
+        Kishan Jat, Janak Jat, and Krunal Suthar, we aim to bridge the gap between nature and modern living. Our journey
+        began with a simple idea: to transform every space into a thriving green haven.
+      </p>
+      <p class="text-lg text-darkBrown max-w-3xl leading-relaxed mt-4">
+        We believe that plants are more than just decorations—they are life-givers that improve mental well-being,
+        purify air, and promote sustainability. With every plant we sell, we strive to nurture not just nature but also
+        the lives of our customers by educating them on plant care and fostering a deeper connection with the
+        environment.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <img src="{% static 'images/our-story.jpg' %}" alt="Our Story" class="w-full h-auto rounded-lg shadow-md">
+      <p class="text-lg text-darkBrown leading-relaxed">
+        At Grow Earth, we believe in creating a movement for a greener future. From urban apartments to rural
+        landscapes, our mission is to make every space thrive with the beauty of plants. Join us in making the world
+        greener, one plant at a time.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission & Values Section -->
+  <section class="bg-primary/10 py-24 px-6 md:px-16">
+    <div class="container mx-auto text-left mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-8">Our Mission & Values 🌍</h2>
+      <p class="text-lg text-darkBrown max-w-3xl leading-relaxed mb-12">
+        At Grow Earth, we are driven by our mission to empower communities through sustainable plant care. Our values
+        guide us in every step of this journey:
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-12 items-stretch">
+      <!-- Mission -->
+      <div
+        class="bg-white p-[25px] rounded-lg shadow-md text-left border border-gray/[0.1] hover:shadow-lg transition duration-[300ms] ease-in-out flex flex-col">
+        <i class="fas fa-seedling text-primary text-[50px] mb-[20px]"></i>
+        <h3 class="text-xl font-semibold text-secondary mb-[15px]">Our Mission</h3>
+        <p class="text-darkBrown leading-relaxed">
+          To make plants accessible to everyone while promoting sustainability and well-being.
+        </p>
+        <p class="text-darkBrown leading-relaxed mt-4">
+          At Grow Earth, we are dedicated to reconnecting people with nature by making greenery a part of every
+          lifestyle.
+          From urban apartments to rural homes, we provide innovative plant solutions that inspire sustainable living
+          and
+          enhance personal well-being.
+        </p>
+      </div>
+
+      <!-- Vision -->
+      <div
+        class="bg-white p-[25px] rounded-lg shadow-md text-left border border-gray/[0.1] hover:shadow-lg transition duration-[300ms] ease-in-out flex flex-col">
+        <i class="fas fa-leaf text-primary text-[50px] mb-[20px]"></i>
+        <h3 class="text-xl font-semibold text-secondary mb-[15px]">Our Vision</h3>
+        <p class="text-darkBrown leading-relaxed">
+          A world where every space is enriched with the beauty and benefits of plants.
+        </p>
+        <p class="text-darkBrown leading-relaxed mt-4">
+          We envision a future where homes, workplaces, and communities thrive as green sanctuaries that support
+          biodiversity, improve air quality, and nurture mental health. Through education and innovation, we aim to make
+          greenery an essential part of everyday life.
+        </p>
+      </div>
+
+      <!-- Values -->
+      <div
+        class="bg-white p-[25px] rounded-lg shadow-md text-left border border-gray/[0.1] hover:shadow-lg transition duration-[300ms] ease-in-out flex flex-col">
+        <i class="fas fa-heartbeat text-primary text-[50px] mb-[20px]"></i>
+        <h3 class="text-xl font-semibold text-secondary mb-[15px]">Our Values</h3>
+        <ul class="list-disc list-inside space-y-[10px] text-darkBrown leading-relaxed">
+          <li>Commitment to sustainability</li>
+          <li>Passion for quality and care</li>
+          <li>Empowering communities</li>
+          <li>Fostering long-term relationships</li>
+          <li>Promoting biodiversity through education</li>
+        </ul>
+        <p class="text-darkBrown leading-relaxed mt-4">
+          Guided by these values, we create eco-friendly solutions that inspire greener lifestyles while fostering a
+          deeper
+          connection between people and the environment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the Team Section -->
+  <section class="bg-gray-100 py-24 px-6 md:px-16">
+    <div class="container mx-auto text-left mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-10">Meet Our Team 🌟</h2>
+      <p class="text-lg text-darkBrown max-w-xl leading-relaxed mb-12">
+        Behind Grow Earth is a team of passionate individuals who share a love for plants and a vision for a greener
+        world. Each member brings unique expertise, from horticulture to technology, management, and global trade,
+        ensuring an exceptional experience for our customers.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Kishan Jat -->
+      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col">
+        <img src="{% static 'images/kishan.jpg' %}" alt="Kishan Jat" class="w-32 h-32 mx-auto rounded-full mb-6">
+        <h3 class="text-xl font-semibold text-secondary">Kishan Jat</h3>
+        <p class="text-darkBrown leading-relaxed mt-4 flex-grow">
+          <i class="fas fa-user-tie mr-2"></i> Founder & Visionary Leader<br>
+          Kishan is the driving force behind Grow Earth’s mission for sustainable solutions. With a deep passion for
+          green
+          innovation, he combines his visionary leadership with cutting-edge technologies to create exceptional
+          experiences for plant enthusiasts.
+        </p>
+      </div>
+
+      <!-- Janak Jat -->
+      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col">
+        <img src="{% static 'images/janak.jpg' %}" alt="Janak Jat" class="w-32 h-32 mx-auto rounded-full mb-6">
+        <h3 class="text-xl font-semibold text-secondary">Janak Jat</h3>
+        <p class="text-darkBrown leading-relaxed mt-4 flex-grow">
+          <i class="fas fa-cogs mr-2"></i> Operations & Strategy Expert<br>
+          Janak ensures smooth operations and customer satisfaction through strategic planning and efficient management.
+          His expertise in coordinating processes across departments helps Grow Earth deliver quality at every step.
+        </p>
+      </div>
+
+      <!-- Krunal Suthar -->
+      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col">
+        <img src="{% static 'images/krunal.jpg' %}" alt="Krunal Suthar" class="w-32 h-32 mx-auto rounded-full mb-6">
+        <h3 class="text-xl font-semibold text-secondary">Krunal Suthar</h3>
+        <p class="text-darkBrown leading-relaxed mt-4 flex-grow">
+          <i class="fas fa-globe mr-2"></i> Import & Export Specialist<br>
+          Krunal oversees Grow Earth’s global supply chain, ensuring responsible sourcing and efficient delivery of
+          plants
+          and materials. His expertise in international trade strengthens the company’s presence in global markets.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call-to-action Section -->
+  <section class="bg-tertiary/10 py-24 flex items-center justify-center">
+    <a href="{% url 'store:categoryes' %}"
+      class="bg-primary text-white px-12 py-6 rounded-full hover:bg-primary/90 transition duration-300 transform hover:scale-[1.05] flex items-center space-x-2">
+      <i class="fas fa-seedling"></i><span>Join Our Mission</span>
+    </a>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Admin Messages - Grow Earth
+{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-16 px-6 md:px-16">
+  <div class="container mx-auto max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold text-secondary mb-6 text-center">Contact Messages</h1>
+
+    <!-- Search Form -->
+    <form method="GET" action="{% url 'core:contact_messages' %}" class="mb-4 flex justify-center">
+      <input type="text" name="q" placeholder="Search messages..."
+        class="border border-gray-300 rounded-lg p-2 w-full md:w-1/3" />
+      <button type="submit"
+        class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg ml-2">Search</button>
+    </form>
+
+    {% if contact_messages %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for message in contact_messages %}
+      <div class="bg-white rounded-lg shadow-md border border-primary p-6 flex flex-col">
+        <h3 class="text-lg font-bold text-secondary">{{ message.name }}</h3>
+        <p class="text-gray-600">{{ message.email }}</p>
+        <p class="text-gray-600">{{ message.country }}</p>
+        <p class="text-gray-600">{{ message.phone }}</p>
+        <p class="mt-2 text-darkBrown">{{ message.message|truncatewords:20 }}</p> <!-- Display first 20 words -->
+        <span class="mt-auto text-gray-500 text-sm">{{ message.created_at|date:"Y-m-d H:i" }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-lg shadow-md border border-primary p-8 text-center">
+      <p class="text-lg text-darkBrown">No messages found.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

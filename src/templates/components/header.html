@@ -117,26 +117,23 @@
       </div>
 
     </div>
-
-    <div class="md:hidden">
-      <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
-        aria-expanded="false"
-        class="text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
-        <i class="fas fa-bars open"></i>
-        <i class="fas fa-times close hidden"></i>
-      </button>
-    </div>
-
     <!-- CSS (for animation) -->
     <style>
       /* Keyframes for icon transition */
-      @keyframes iconTransition {
+      @keyframes iconFadeOut {
         0% {
           opacity: 1;
           transform: scale(1);
         }
 
-        50% {
+        100% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+      }
+
+      @keyframes iconFadeIn {
+        0% {
           opacity: 0;
           transform: scale(0.5);
         }
@@ -147,18 +144,41 @@
         }
       }
 
-      .open {
-        animation: iconTransition 0.3s forwards;
+      /* Open Icon Animation */
+      .open.fade-out {
+        animation: iconFadeOut 0.3s forwards;
       }
 
-      .close {
-        animation: iconTransition 0.3s forwards;
+      .open.fade-in {
+        animation: iconFadeIn 0.3s forwards;
+      }
+
+      /* Close Icon Animation */
+      .close.fade-out {
+        animation: iconFadeOut 0.3s forwards;
+      }
+
+      .close.fade-in {
+        animation: iconFadeIn 0.3s forwards;
       }
     </style>
+    <div class="md:hidden md:h-full">
+      <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
+        aria-expanded="false"
+        class="w-12 h-12 text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
+        <!-- Open Icon (fa-bars) -->
+        <i
+          class="fas fa-bars open inset-0 flex items-center justify-center transition-opacity duration-300 ease-in-out"></i>
+        <!-- Close Icon (fa-times) -->
+        <i
+          class="fas fa-times close inset-0 flex items-center justify-center transition-opacity duration-300 ease-in-out invisible"></i>
+      </button>
+    </div>
+
   </nav>
   <!-- Mobile Navigation Overlay -->
   <div id="mobileNavLinks"
-    class="max-h-0 flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ease-in-out bg-primary p-6 rounded-md w-full max-w-md absolute left-1/2 transform -translate-x-1/2 top-[-100%] z-50">
+    class="max-h-0 flex md:invisible flex-col items-center gap-4 overflow-hidden transition-all duration-500 ease-in-out bg-primary p-6 rounded-md w-full max-w-md absolute left-1/2 transform -translate-x-1/2 top-[-100%] z-50">
     <div class="container mx-auto px-2 py-4 w-full">
       <!-- Mobile Navigation Links -->
       <div class="flex flex-col space-y-6">
@@ -276,10 +296,14 @@
     toggleButton.addEventListener('click', function () {
       const expanded = toggleButton.getAttribute("aria-expanded") === "true";
 
+      // Toggle aria-expanded state
       toggleButton.setAttribute("aria-expanded", !expanded);
-      openIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('hidden');
 
+      // Toggle visibility of the icons using Tailwind visibility classes
+      openIcon.classList.toggle('invisible');  // Toggle open icon visibility
+      closeIcon.classList.toggle('invisible'); // Toggle close icon visibility
+
+      // Toggle mobile navigation visibility
       if (mobileNavLinks.classList.contains("max-h-0")) {
         mobileNavLinks.classList.remove("max-h-0");
         mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
@@ -292,11 +316,15 @@
     document.addEventListener('click', function (event) {
       if (!toggleButton.contains(event.target) && !mobileNavLinks.contains(event.target)) {
         toggleButton.setAttribute("aria-expanded", "false");
-        openIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
+
+        // Reset icons when clicking outside
+        openIcon.classList.add('invisible');
+        closeIcon.classList.remove('invisible');
+
         mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
         mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
       }
     });
   });
+
 </script>

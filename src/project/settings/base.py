@@ -27,11 +27,13 @@ INSTALLED_APPS = [
     "apps.store.apps.StoreConfig",
     "apps.tags.apps.TagsConfig",
     "apps.accounts.apps.AccountsConfig",
+    "django_countries",
 ]
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

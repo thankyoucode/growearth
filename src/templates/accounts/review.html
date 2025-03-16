@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+Grow Earth - Reviews & Feedback
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold text-secondary mb-6">Customer Reviews & Feedback</h1>
+
+  <!-- Review/Feedback Form -->
+  {% if user.is_authenticated %}
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-2xl font-semibold text-secondary mb-4">Submit Review or Feedback</h2>
+    <form method="post" action="{% url 'accounts:submit_opinion' %}" id="review-form">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Rating:</label>
+        <div class="star-rating flex cursor-pointer items-center" id="star-rating">
+          {% for i in "12345" %}
+          <i data-value="{{ i }}"
+            class="star fas fa-star text-2xl text-saffron hover:text-primary transition duration-200 mr-1"
+            aria-label="Rate {{ i }} star" tabindex="0"></i>
+          {% endfor %}
+          <input type="hidden" name="rating" id="rating-input" value="">
+          <span id="rating-required-message" class="text-red-500 text-sm ml-2 hidden">(Select a star)</span>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">Comment:</label>
+        <textarea name="comment" id="comment" rows="4"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          aria-label="Enter your comment"></textarea>
+      </div>
+      <button
+        class="bg-primary hover:bg-primary/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        Submit
+      </button>
+    </form>
+  </div>
+  {% else %}
+  <p class="text-gray-600">Please <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="text-primary">log
+      in</a> to
+    submit a review or feedback.</p>
+  {% endif %}
+
+  <!-- Display Reviews -->
+  <div class="mb-8">
+    {% if reviews %}
+    {% for review in reviews %}
+    <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+      <p class="text-lg font-semibold text-gray-800">{{ review.user.first_name }} {{ review.user.last_name }}</p>
+      {% if review.rating %}
+      <div class="flex items-center mb-2">
+        <span class="mr-2 text-gray-600">Rating:</span>
+        <!-- Display filled stars based on the rating -->
+        {% for star in review.star_list %}
+        <i class="fas fa-star text-yellow-500"></i> <!-- Filled star -->
+        {% endfor %}
+      </div>
+      {% endif %}
+      <p class="text-gray-700">{{ review.comment }}</p>
+      <p class="text-gray-500 text-sm mt-2">Created at {{ review.created_at }}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="text-gray-600">No reviews yet.</p>
+    {% endif %}
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star-rating .star');
+    const ratingInput = document.getElementById('rating-input');
+    const ratingRequiredMessage = document.getElementById('rating-required-message');
+    const reviewForm = document.getElementById('review-form');
+
+    function updateStars(selectedValue) {
+      stars.forEach(star => {
+        const starValue = parseInt(star.dataset.value);
+        if (starValue <= selectedValue) {
+          star.classList.add('text-primary');
+          star.classList.remove('text-saffron');
+        } else {
+          star.classList.remove('text-primary');
+          star.classList.add('text-saffron');
+        }
+      });
+    }
+
+    stars.forEach(star => {
+      star.addEventListener('click', function () {
+        const value = parseInt(this.dataset.value);
+        ratingInput.value = value;
+        updateStars(value);
+        ratingRequiredMessage.classList.add('hidden'); // Hide the message when a star is selected
+      });
+
+      star.addEventListener('mouseover', function () {
+        const value = parseInt(this.dataset.value);
+        updateStars(value);
+      });
+
+      star.addEventListener('mouseout', function () {
+        const selectedRating = ratingInput.value;
+        if (selectedRating) {
+          updateStars(parseInt(selectedRating));
+        } else {
+          stars.forEach(star => {
+            star.classList.remove('text-primary');
+            star.classList.add('text-saffron');
+          });
+        }
+      });
+    });
+
+    // Prevent form submission if no rating is selected
+    reviewForm.addEventListener('submit', function (event) {
+      if (!ratingInput.value) {
+        event.preventDefault(); // Prevent form submission
+        ratingRequiredMessage.classList.remove('hidden'); // Show the message
+      }
+    });
+  });
+</script>
+{% endblock %}

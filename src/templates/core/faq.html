@@ -1,0 +1,180 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+FAQs - Grow Earth
+{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-16 px-6 md:px-16" x-data="faqHandler()">
+  <div class="container mx-auto max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-6">Plant Care & Services FAQ 🌿</h2>
+      <p class="text-lg text-darkBrown mb-8">Answers to common queries about plant selection, delivery, and care</p>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="space-y-4">
+      <template x-for="(faq, index) in faqs" :key="index">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+          <button @click="toggleFAQ(index)"
+            class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+            <span class="text-lg font-medium text-darkBrown" x-text="faq.question"></span>
+            <svg class="h-6 w-6 transform transition-transform" :class="{ 'rotate-180': activeIndex === index }"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div x-show="activeIndex === index" x-collapse class="px-6 pb-4 pt-2 border-t border-gray-100">
+            <p class="text-darkBrown leading-relaxed" x-html="faq.answer"></p>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('faqHandler', () => ({
+        activeIndex: null,
+        faqs: [
+          {
+            question: "How do I choose the right plant for my space?",
+            answer: `Consider factors like light availability, humidity, and space size. For low-light areas, plants like Snake Plant or Pothos work best. For brighter spaces, consider succulents or Fiddle Leaf Fig. 
+      <br><br>
+      Our team also provides care instructions to help you select plants that thrive in your environment.`,
+          },
+          {
+            question: "What payment methods do you accept?",
+            answer: `We offer a variety of secure payment options to make your shopping experience seamless:
+      <ul class="list-disc pl-5 mt-2">
+        <li><span class="font-medium">Credit/Debit Cards:</span> We accept Visa, Mastercard, and other major cards.</li>
+        <li><span class="font-medium">PayPal:</span> Available for secure transactions.</li>
+        <li><span class="font-medium">UPI:</span> Convenient digital payment options.</li>
+        <li><span class="font-medium">Bank Transfers:</span> For larger orders or corporate clients.</li>
+        <li><span class="font-medium">Cash on Delivery (COD):</span> Pay in cash when your order is delivered to your doorstep.</li>
+      </ul>
+      All transactions are encrypted and secured with industry-standard protocols to protect your information.`,
+          },
+          {
+            question: "How are plants packaged for safe delivery?",
+            answer: `Ensuring the safety of your plants during transit is our top priority. Here's how we package them:
+      <ul class="list-disc pl-5 mt-2">
+        <li><span class="font-medium">Biodegradable Boxes:</span> We use eco-friendly packaging materials that are safe for the environment.</li>
+        <li><span class="font-medium">Coco Peat Root Protection:</span> This keeps the roots moist and healthy throughout the journey.</li>
+        <li><span class="font-medium">Three-Layer Packaging:</span> Includes a protective layer around the pot, cushioning material for shock absorption, and an outer box for durability.</li>
+      </ul>
+      Our packaging ensures a high survival rate during delivery. If you have any concerns upon receiving your plant, our support team is here to help.`,
+          },
+          {
+            question: "Can I get plants not listed on your website?",
+            answer: `Yes! If you're looking for a specific plant that isn't listed on our website, we can source it for you. Simply submit a <span class='font-medium'>Special Request</span> through our contact form with the plant's name or details.
+      <br><br>
+      Our team will check availability from our trusted network of nurseries and provide an estimated timeline. Rare species typically take 7-10 working days to source.`,
+          },
+          {
+            question: "What's your plant replacement policy?",
+            answer: `We stand by the quality of our plants and offer a hassle-free replacement policy:
+      <ul class="list-disc pl-5 mt-2">
+        <li><span class="font-medium">48-Hour Replacement Guarantee:</span> If your plant arrives damaged, contact us within 48 hours with photos. We'll replace it free of charge or offer store credit.</li>
+        <li><span class="font-medium">30-Day Care Support:</span> If you face any issues with your plant within the first month, our experts will guide you through recovery steps.</li>
+        <li><span class="font-medium">Free Video Consultations:</span> Schedule a video call with our plant care specialists for personalized advice.</li>
+      </ul>`,
+          },
+          {
+            question: "Do you provide seasonal care guidance?",
+            answer: `Yes! Plants require different care based on the season. Subscribe to our free monthly newsletter to receive:
+      <ul class="list-disc pl-5 mt-2">
+        <li><span class="font-medium">Watering Schedules:</span> Adjusted recommendations based on seasonal changes.</li>
+        <li><span class="font-medium">Fertilizer Tips:</span> Guidance on when and how to fertilize your plants for optimal growth.</li>
+        <li><span class="font-medium">Pest Control Advice:</span> Tips to protect your plants from common seasonal pests like aphids or mealybugs.</li>
+      </ul>
+      Our goal is to help you keep your plants healthy year-round.`,
+          },
+          {
+            question: "What makes your service different from other plant stores?",
+            answer: `<div class="space-y-2">
+      Our service stands out because we focus on providing an exceptional customer experience:
+      <p>✓ Personalized recommendations based on your environment and preferences</p>
+      <p>✓ Detailed care guides included with every order</p>
+      <p>✓ Live video inspections of plants before purchase (on request)</p>
+      <p>✓ Eco-friendly packaging and sustainable delivery options</p>
+      <p>✓ Student/Educator discounts up to 25%</p>
+    </div>`,
+          },
+
+          {
+            question: "How do I choose the right plant for my space?",
+            answer: `Consider factors like light availability, humidity, and space size. For low-light areas, plants like Snake Plant or Pothos work best. For bright spaces, consider succulents or Fiddle Leaf Fig.`,
+          },
+          {
+            question: "How often should I water my plants?",
+            answer: `Watering frequency depends on the plant type. As a general rule:
+      <ul class="list-disc pl-5 mt-2">
+        <li>Check soil moisture weekly</li>
+        <li>Water when the top inch of soil feels dry</li>
+        <li>Avoid overwatering to prevent root rot</li>
+      </ul>`,
+          },
+          {
+            question: "What are the best plants for beginners?",
+            answer: `We recommend:
+      <ul class="list-disc pl-5 mt-2">
+        <li>Snake Plant</li>
+        <li>Pothos (Money Plant)</li>
+        <li>Aloe Vera</li>
+        <li>Zamioculcas Zamiifolia (ZZ Plant)</li>
+      </ul>
+      These plants are hardy and require minimal care.`,
+          },
+          {
+            question: "How are plants packaged for delivery?",
+            answer: "Plants are carefully packaged in eco-friendly materials with protective layers to ensure they arrive healthy and undamaged.",
+          },
+          {
+            question: "What if my plant arrives damaged?",
+            answer: "If your plant arrives damaged, contact us within 24 hours with photos. We’ll replace the plant or offer store credit.",
+          },
+          {
+            question: "Do you offer plant care guidance?",
+            answer: "Yes! We provide detailed care instructions with every plant. You can also reach out to our support team for additional tips.",
+          },
+          {
+            question: "Can I customize my order with pots or planters?",
+            answer: "Yes! Choose from a variety of pots and planters during checkout to customize your order.",
+          },
+          {
+            question: "Do you offer bulk orders for offices or events?",
+            answer: "Yes, we offer bulk discounts for offices, weddings, and events. Contact us for custom packages and pricing.",
+          },
+          {
+            question: "How do I know if my plant is healthy?",
+            answer: `Look for:
+      <ul class="list-disc pl-5 mt-2">
+        <li>Bright green leaves without spots</li>
+        <li>No signs of pests</li>
+        <li>Firm stems and roots</li>
+      </ul>
+      If you notice any issues, contact us for expert advice.`,
+          },
+          {
+            question: "What are the best low-maintenance indoor plants?",
+            answer: `Some of the best low-maintenance indoor plants include:
+      <ul class="list-disc pl-5 mt-2">
+        <li>Snake Plant</li>
+        <li>Peace Lily</li>
+        <li>Spider Plant</li>
+        <li>Rubber Plant</li>
+      </ul>`,
+          },
+
+        ],
+        toggleFAQ(index) {
+          this.activeIndex = this.activeIndex === index ? null : index
+        }
+      }))
+    })
+  </script>
+</section>
+{% endblock %}

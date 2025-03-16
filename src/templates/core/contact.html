@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Contact Us - Grow Earth
+{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-16 px-6 md:px-16">
+  <div class="container mx-auto max-w-4xl">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-secondary mb-6">Get in Touch 🌿</h1>
+      <p class="text-lg text-darkBrown mb-8">We're here to help! Whether you have questions about plant care, need
+        assistance with an order, or just want to say hello, feel free to reach out.</p>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <!-- Contact Details -->
+      <div>
+        <h2 class="text-2xl font-bold text-secondary mb-4">Contact Information</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold text-secondary"><i class="fas fa-map-marker-alt mr-2"></i>Address</h3>
+            <p class="text-darkBrown">123 Green Street, Jaipur, Rajasthan</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-secondary"><i class="fas fa-phone mr-2"></i>Phone</h3>
+            <p class="text-darkBrown"><a href="tel:+919876543210" class="text-green-600">+91 98765 43210</a></p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-secondary"><i class="fas fa-envelope mr-2"></i>Email</h3>
+            <p class="text-darkBrown"><a href="mailto:support@growearth.com"
+                class="text-green-600">support@growearth.com</a></p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-secondary"><i class="fas fa-clock mr-2"></i>Business Hours</h3>
+            <p class="text-darkBrown">Monday - Friday: 9:00 AM to 6:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="bg-white p-8 rounded-lg shadow-md border border-primary">
+        <h2 class="text-2xl font-bold text-secondary mb-6">Send Us a Message</h2>
+        <form id="contact-form" action="{% url 'core:contact' %}" method="POST" class="space-y-6">
+          {% csrf_token %}
+
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-darkBrown font-medium mb-2">Your Name</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <span class="text-red-600 text-sm">{{ form.name.errors }}</span> <!-- Error message styling -->
+            {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-darkBrown font-medium mb-2">Your Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <span class="text-red-600 text-sm">{{ form.email.errors }}</span> <!-- Error message styling -->
+            {% endif %}
+          </div>
+
+          <!-- Country -->
+          <div>
+            <label for="country" class="block text-darkBrown font-medium mb-2">Your Country</label>
+            {{ form.country }}
+            {% if form.country.errors %}
+            <span class="text-red-600 text-sm">{{ form.country.errors }}</span> <!-- Error message styling -->
+            {% endif %}
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="phone" class="block text-darkBrown font-medium mb-2">Your Phone Number (Optional)</label>
+            {{ form.phone }}
+            {% if form.phone.errors %}
+            <span class="text-red-600 text-sm">{{ form.phone.errors }}</span> <!-- Error message styling -->
+            {% endif %}
+            <small class="text-gray-500">Enter your phone number if you wish to be contacted.</small>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="block text-darkBrown font-medium mb-2">Your Message</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+            <span class="text-red-600 text-sm">{{ form.message.errors }}</span> <!-- Error message styling -->
+            {% endif %}
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit"
+            class="w-full bg-primary hover:bg-secondary text-white font-bold py-3 rounded-lg transition duration-300 ease-in-out">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#contact-form').on('submit', function (e) {
+      e.preventDefault(); // Prevent default form submission
+
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(), // Serialize form data
+        success: function (response) {
+          // Optionally reset the form after successful submission
+          $('#contact-form')[0].reset();
+        },
+        error: function (xhr, status, error) {
+          // Handle error silently or log it if needed
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock %}

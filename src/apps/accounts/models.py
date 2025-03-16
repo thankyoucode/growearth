@@ -6,7 +6,9 @@ from django.contrib.auth.models import (
     Group,
     Permission,
     PermissionsMixin,
+    User,
 )
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
@@ -61,3 +63,47 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class UserOpinion(models.Model):
+    """
+    A unified model to capture user reviews and feedback.
+    """
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="opinions",
+        help_text="The user who submitted the opinion.",
+    )
+    rating = models.IntegerField(
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        help_text="Rating from 1 to 5 stars.  Leave blank for general feedback.",
+    )
+    comment = models.TextField(blank=True, help_text="Detailed review or feedback.")
+    is_review = models.BooleanField(
+        default=False, help_text="Is this a review (with a rating)?"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "User Opinion"
+        verbose_name_plural = "User Opinions"
+        ordering = ["-created_at"]  # Most recent first
+
+    def __str__(self):
+        if self.is_review:
+            return f"Review by {self.user.email} - {self.rating} stars"  # Change username to email
+        else:
+            return f"Feedback from {self.user.email}"  # Change username to email
+
+    def save(self, *args, **kwargs):
+        """
+        Override the save method to ensure that if a rating is provided,
+        the 'is_review' flag is set to True.
+        """
+        if self.rating is not None:
+            self.is_review = True
+        super().save(*args, **kwargs)

@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Page Not Found - Grow Earth
+{% endblock %}
+
+{% block content %}
+<section class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="text-center p-6">
+    <h1 class="text-6xl font-bold text-secondary mb-4">404</h1>
+    <h2 class="text-3xl font-semibold text-darkBrown mb-2">Oops! This Page Doesn’t Exist</h2>
+    <p class="text-lg text-gray-700 mb-6">Sorry, but the page you are looking for cannot be found. Please check the URL
+      or return to our homepage to continue exploring our plant collection.</p>
+
+    <!-- SVG Illustration -->
+    <div class="mb-6">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" width="200px" height="200px">
+        <path
+          d="M32 2C15.4 2 2 15.4 2 32s13.4 30 30 30 30-13.4 30-30S48.6 2 32 2zm0 56C16.5 58 6 47.5 6 32S16.5 6 32 6s26 10.5 26 26-10.5 26-26 26z"
+          fill="#4A9E5D" />
+        <path
+          d="M32 12c-11.5 0-20.8 9.3-20.8 20.8S20.5 53.6 32 53.6s20.8-9.3 20.8-20.8S43.5 12 32 12zm0 36c-8.4 0-15.2-6.8-15.2-15.2S23.6 17.6 32 17.6s15.2 6.8 15.2 15.2S40.4 48 32 48z"
+          fill="#A4D65E" />
+        <circle cx="32" cy="32" r="3" fill="#FFF" />
+      </svg>
+    </div>
+
+    <a href="{% url 'home' %}"
+      class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out">Go
+      to Home</a>
+  </div>
+</section>
+{% endblock %}

@@ -4,95 +4,6 @@ from django.utils.translation import gettext_lazy as _
 # from django.utils.translation import gettext as _
 
 
-# def navigation_links(request):
-#     """
-#     Dynamically generate navigation links with active state and metadata
-#     """
-#     current_path = request.path
-#     links = [
-#         {
-#             "name": _("Home"),
-#             "url": "core:home",
-#             "icon": "home-outline",
-#             "active": current_path == reverse("core:home"),
-#             "permission": None,
-#             "order": 1,
-#         },
-#         {
-#             "name": _("Plants"),
-#             "url": "store:plants",
-#             "icon": "leaf-outline",
-#             "active": current_path == reverse("store:plants"),
-#             "permission": "store.view_plant",
-#             "order": 2,
-#         },
-#         {
-#             "name": _("Collections"),
-#             "url": "store:collections",
-#             "icon": "collection-outline",
-#             "active": current_path == reverse("store:collections"),
-#             "permission": None,
-#             "order": 3,
-#         },
-#         {
-#             "name": _("Care Guide"),
-#             "url": "store:care_guide",
-#             "icon": "book-outline",
-#             "active": current_path == reverse("store:care_guide"),
-#             "permission": None,
-#             "order": 4,
-#         },
-#         {
-#             "name": _("Impact"),
-#             "url": "core:impact",
-#             "icon": "globe-outline",
-#             "active": current_path == reverse("core:impact"),
-#             "permission": None,
-#             "order": 5,
-#         },
-#     ]
-#     # Optional: Filter links based on user permissions
-#     filtered_links = [
-#         link
-#         for link in links
-#         if (not link.get("permission"))
-#         or (request.user.is_authenticated and request.user.has_perm(link["permission"]))
-#     ]
-#     # Optional: Sort links by order
-#     sorted_links = sorted(filtered_links, key=lambda x: x.get("order", 999))
-#     return {"navigation_links": sorted_links}
-# for now not using that dropdown manu
-# {
-#     "name": _("Plants"),
-#     "type": "dropdown",
-#     "active": "/store/" in request.path,
-#     "categories": [
-#         {
-#             "name": _("Indoor Plants"),
-#             "url": "store:indoor_plants",  # URL pattern name
-#             "icon": "fa-home",
-#             "description": _("Perfect for home and office spaces"),
-#         },
-#         {
-#             "name": _("Outdoor Plants"),
-#             "url": "store:outdoor_plants",  # URL pattern name
-#             "icon": "fa-tree",
-#             "description": _("Enhance your garden and landscape"),
-#         },
-#         {
-#             "name": _("Rare Collectibles"),
-#             "url": "store:rare_plants",  # URL pattern name
-#             "icon": "fa-star",
-#             "description": _("Unique and exotic plant varieties"),
-#         },
-#         {
-#             "name": _("Succulents"),
-#             "url": "store:succulents",  # URL pattern name
-#             "icon": "fa-seedling",
-#             "description": _("Low maintenance plant collection"),
-#         },
-#     ],
-# },
 def navigation_links(request):
     return {
         "auth_links": {
@@ -136,15 +47,15 @@ def navigation_links(request):
             },
             {
                 "name": _("Care Guide"),
-                "url": "store:care_guide",
+                "url": "core:care_guide",
                 "type": "single",
-                "active": request.path == reverse("store:care_guide"),
+                "active": request.path == reverse("core:care_guide"),
             },
             {
-                "name": _("Consultation"),
-                "url": "core:consultation",
+                "name": _("About Us"),
+                "url": "core:about",
                 "type": "single",
-                "active": request.path == reverse("core:consultation"),
+                "active": request.path == reverse("core:about"),
             },
         ],
     }
@@ -164,11 +75,17 @@ def footer_context(request):
                     "icon": "leaf-outline",
                 },
                 {
-                    "name": _("Consultation"),
-                    "url": "core:consultation",
-                    "icon": "support-outline",
+                    "name": _("Terms of Service"),
+                    "url": "core:termsofservice",
+                    "icon": "fa-file-contract",
                 },
                 {"name": _("About Us"), "url": "core:about", "icon": "info-outline"},
+                {"name": _("Reviews"), "url": "accounts:review_list", "icon": "star"},
+                {
+                    "name": _("Your Opinion"),
+                    "url": "accounts:submit_opinion",
+                    "icon": "comment",
+                },
             ],
             "support_links": [
                 {"name": _("FAQ"), "url": "core:faq", "icon": "help-circle-outline"},

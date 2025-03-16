@@ -2,11 +2,15 @@ import re
 
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from .._services.email_verify import EmailVerificationService
-from .models import CustomUser
+from .models import (
+    CustomUser,  # Import your CustomUser model
+    UserOpinion,
+)
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -157,3 +161,87 @@ class UserLoginForm(forms.Form):
                 attrs={"placeholder": "Your email address", "class": "grow-earth-input"}
             ),
         }
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = [
+            "first_name",
+            "last_name",
+            "phone_number",
+            "address",
+        ]  # Include all editable fields
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+            ),
+            "phone_number": forms.TextInput(
+                attrs={
+                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+            ),
+            "address": forms.Textarea(
+                attrs={
+                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                    "rows": 3,
+                }
+            ),
+        }
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+                "placeholder": "Old Password",
+            }
+        ),
+        label="Old Password",
+    )
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+                "placeholder": "New Password",
+            }
+        ),
+        label="New Password",
+    )
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+                "placeholder": "Confirm New Password",
+            }
+        ),
+        label="Confirm New Password",
+    )
+
+
+class UserOpinionForm(forms.ModelForm):
+    class Meta:
+        model = UserOpinion
+        fields = ["rating", "comment"]
+        widgets = {
+            "comment": forms.Textarea(
+                attrs={
+                    "rows": 4,
+                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                }
+            ),
+        }
+        labels = {"comment": "Your Review/Feedback:", "rating": "Rating (Optional):"}
+        help_texts = {"rating": "Leave blank if you just want to send feedback."}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["rating"].required = False  # Make rating optional
