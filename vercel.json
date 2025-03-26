@@ -4,35 +4,41 @@
     {
       "src": "src/project/wsgi.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.12" }
+      "config": {
+        "runtime": "python3.12"
+      }
     },
     {
       "src": "scripts/build_files.sh",
       "use": "@vercel/static-build",
-      "config": { "distDir": "staticfiles" }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1",
-      "headers": { "Cache-Control": "public, max-age=31536000" }
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "src/project/wsgi.py",
-      "headers": {
-        "X-Frame-Options": "DENY",
-        "Content-Security-Policy": "default-src 'self'"
+      "config": {
+        "distDir": "staticfiles"
       }
     }
   ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "project.settings.production",
-    "PYTHONUNBUFFERED": "1"
-  }
+  "rewrites": [
+    {
+      "source": "/static/(.*)",
+      "destination": "/static/$1"
+    },
+    {
+      "source": "/media/(.*)",
+      "destination": "/media/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/src/project/wsgi.py"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'" }
+      ]
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
