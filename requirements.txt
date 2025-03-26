@@ -1,40 +1,11 @@
-asgiref==3.8.1
-certifi==2025.1.31
-charset-normalizer==3.4.1
-click==8.1.8
-colorama==0.4.6
-cssbeautifier==1.15.4
-django==5.1.7
-django-browser-reload==1.18.0
-django-countries==7.6.1
-django-debug-toolbar==5.0.1
-django-extensions==3.2.3
-django-formtools==2.5.1
-django-tailwind==3.8.0
-django-tailwind-cli==4.1.0
-django-two-factor-auth==1.17.0
-django-typer==3.0.0
-djlint==1.36.4
-editorconfig==0.17.0
-fontawesomefree==6.6.0
-idna==3.10
-jsbeautifier==1.15.4
-json5==0.10.0
-pathspec==0.12.1
-pillow==11.1.0
-pypng==0.20220715.0
-python-dotenv==1.0.1
-pyyaml==6.0.2
-qrcode==7.4.2
-regex==2024.11.6
-requests==2.32.3
-semver==3.0.4
-shellingham==1.5.4
-six==1.17.0
-sqlparse==0.5.3
-tailwind==3.1.5b0
-tqdm==4.67.1
-typer-slim==0.15.2
-typing-extensions==4.12.2
-urllib3==2.3.0
-whitenoise==6.9.0
+Django==4.2  # Main framework
+gunicorn==21.2.0  # WSGI server for running your application
+whitenoise==6.9.0  # For serving static files
+python-dotenv==1.0.1  # For managing environment variables
+Pillow==11.1.0  # For image processing (required for ImageField)
+django-countries==7.3.0  # For country field support
+django-tailwind==3.8.0  # Tailwind CSS integration (precompile CSS before deployment)
+fontawesomefree==6.6.0  # Font Awesome integration
+requests==2.32.3  # HTTP requests handling (if used in your project)
+regex==2024.11.6  # Advanced regular expressions support (if needed)
+sqlparse==0.5.3  # SQL parsing library (used internally by Django)
