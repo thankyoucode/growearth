@@ -4,7 +4,7 @@ from .base import *
 
 # Security Settings
 DEBUG = False  # Debug is False for testing production-like behavior locally
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ".verce.app,.now.sh").split(",")
 
 # Database Configuration (using SQLite for local development)
 DATABASES = {

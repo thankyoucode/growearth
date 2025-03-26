@@ -49,7 +49,7 @@ LOGGING = {
     },
 }
 
-TAILWIND_APP_NAME = TAILWIND_APP_NAME = "tailwind"
+TAILWIND_APP_NAME = "tailwind"
 TAILWIND_MODE = "watch"
 # NPM_BIN_PATH = "/usr/local/bin/npm"
 
