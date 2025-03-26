@@ -119,9 +119,11 @@ Contact Us - Grow Earth
         success: function (response) {
           // Optionally reset the form after successful submission
           $('#contact-form')[0].reset();
+          location.reload();
+
         },
         error: function (xhr, status, error) {
-          // Handle error silently or log it if needed
+          location.reload();
         }
       });
     });

@@ -6,17 +6,20 @@ colorama==0.4.6
 cssbeautifier==1.15.4
 django==5.1.7
 django-browser-reload==1.18.0
+django-countries==7.6.1
 django-debug-toolbar==5.0.1
 django-extensions==3.2.3
 django-formtools==2.5.1
 django-otp==1.5.4
 django-phonenumber-field==8.0.0
+django-tailwind==3.8.0
 django-tailwind-cli==4.1.0
 django-two-factor-auth==1.17.0
 django-typer==3.0.0
 djlint==1.36.4
 editorconfig==0.17.0
 fontawesomefree==6.6.0
+-e file:///home/jatkishan/Projects/grow-earth
 idna==3.10
 jsbeautifier==1.15.4
 json5==0.10.0
@@ -38,3 +41,4 @@ tqdm==4.67.1
 typer-slim==0.15.2
 typing-extensions==4.12.2
 urllib3==2.3.0
+whitenoise==6.9.0

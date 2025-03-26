@@ -7,7 +7,7 @@ from .base import *
 
 # Development-specific configurations
 DEBUG = True
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = "localhost,127.0.0.1".split(",")
 
 # Database Configuration
 DATABASES = {
@@ -23,8 +23,6 @@ INSTALLED_APPS += [
     "django_extensions",
     "tailwind",
     "django_browser_reload",
-    # "django_sass_processor",
-    # "compressor",
 ]
 
 MIDDLEWARE += [

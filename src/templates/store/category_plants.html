@@ -58,9 +58,9 @@ Category Detail - {{ category.title }}
       <div class="w-full h-auto">
         {% if plant.image %}
         <img loading="lazy" src="{{ plant.image.url }}" alt="{{ plant.title }}"
-          class="object-cover object-center w-full h-[400px] sm:h-[450px] md:h-[500px] transition-transform duration-300 hover:scale-[1.05]" />
+          class="object-cover object-center w-full h-[350px] sm:h-[400px] md:h-[450px] transition-transform duration-300 hover:scale-[1.05]" />
         {% else %}
-        <div class="h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
+        <div class="h-[350px] sm:h-[400px] md:h-[450px] flex items-center justify-center bg-gray-100 rounded-lg">
           <p class="text-center text-gray-500 text-sm p-4">
             No image available for this plant.
           </p>
@@ -84,17 +84,16 @@ Category Detail - {{ category.title }}
         </div>
 
         <!-- Buttons -->
-        <div class="flex justify-between mt-4">
+        <div class="flex justify-between mt-4 h-fit">
           <!-- Add to Cart Button -->
-          <a href="{% url 'store:add_to_cart' plant.id %}" data-url="{% url 'store:add_to_cart' plant.id %}"
-            class="add-to-cart-button bg-secondary text-black px-6 py-2 rounded-full flex items-center hover:bg-bamboo-light transition duration-300 shadow-md font-medium">
+          <button data-url="{% url 'store:add_to_cart' plant.id %}"
+            class="add-to-cart-button bg-gradient-to-r from-green-400 to-green-600 px-6 py-3 rounded-full hover:from-green-500 hover:to-green-700 transition duration-300 shadow-md transform hover:scale-[1.05] active:scale-[0.95] font-medium flex">
             <img src="{% static 'images/add-to-cart.svg' %}" alt="Add to Cart" class="w-6 h-6 mr-2 add-to-cart-icon" />
             Add to Cart
-          </a>
-
+        </button>
           <!-- More Details Button -->
           <a href="{% url 'store:plant' plant.id %}"
-            class="bg-saffron text-black px-6 py-2 rounded-full hover:bg-bamboo-light transition duration-300 shadow-md font-medium">
+            class="bg-saffron text-black px-6 py-3 rounded-full hover:bg-bamboo-light transition duration-300 shadow-md font-medium">
             More Details
           </a>
         </div>

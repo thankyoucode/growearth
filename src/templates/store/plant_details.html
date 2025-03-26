@@ -5,6 +5,12 @@
 Plant Detail - {{ plant.title }}
 {% endblock %}
 
+
+{% block head %}
+<!-- Include AOS CSS -->
+<link rel="stylesheet" href="{% static 'css/aos.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="min-h-screen px-4 py-8 mb-8 bg-gradient-to-br from-green-50 via-white to-green-100">
   <!-- Plant Title -->
@@ -81,14 +87,13 @@ Plant Detail - {{ plant.title }}
         </div>
         {% endif %}
       </div>
-
-      <!-- Add to Cart Button -->
       <button data-url="{% url 'store:add_to_cart' plant.id %}"
-        class="add-to-cart-button bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-full hover:from-green-500 hover:to-green-700 transition duration-300 shadow-md transform hover:scale-[1.05] active:scale-[0.95] font-medium mt-8">
+        class="add-to-cart-button bg-gradient-to-r from-green-400 to-green-600 px-6 py-3 rounded-full hover:from-green-500 hover:to-green-700 transition duration-300 shadow-md transform hover:scale-[1.05] active:scale-[0.95] font-medium mt-8 flex items-center justify-center">
+        <img src="{% static 'images/add-to-cart.svg' %}" alt="Add to Cart" class="w-6 h-6 mr-2 add-to-cart-icon" />
         Add to Cart
       </button>
     </div>
-  </div>
+  </div>1
 
   <!-- Back Button -->
   <div class="text-center mt-12">
@@ -99,14 +104,8 @@ Plant Detail - {{ plant.title }}
   </div>
 </div>
 {% endblock %}
-
-{% block head %}
-<!-- Include AOS CSS for Animations -->
-<link rel="stylesheet" href="{% static 'css/aos.css' %}">
-{% endblock %}
-
 {% block scripts %}
-<!-- Include AOS JavaScript for Animations -->
+<!-- Include AOS JavaScript -->
 <script src="{% static 'js/aos.js' %}"></script>
 <script>
   // Initialize AOS Animations
@@ -136,5 +135,4 @@ Plant Detail - {{ plant.title }}
     });
   });
 </script>
-
 {% endblock %}

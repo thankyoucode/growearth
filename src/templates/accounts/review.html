@@ -12,7 +12,7 @@ Grow Earth - Reviews & Feedback
 
   <!-- Review/Feedback Form -->
   {% if user.is_authenticated %}
-  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+  <div class="bg-white rounded-lg shadow-md border border-primary p-6 mb-8">
     <h2 class="text-2xl font-semibold text-secondary mb-4">Submit Review or Feedback</h2>
     <form method="post" action="{% url 'accounts:submit_opinion' %}" id="review-form">
       {% csrf_token %}
@@ -50,22 +50,24 @@ Grow Earth - Reviews & Feedback
   <!-- Display Reviews -->
   <div class="mb-8">
     {% if reviews %}
-    {% for review in reviews %}
-    <div class="bg-white rounded-lg shadow-md p-6 mb-4">
-      <p class="text-lg font-semibold text-gray-800">{{ review.user.first_name }} {{ review.user.last_name }}</p>
-      {% if review.rating %}
-      <div class="flex items-center mb-2">
-        <span class="mr-2 text-gray-600">Rating:</span>
-        <!-- Display filled stars based on the rating -->
-        {% for star in review.star_list %}
-        <i class="fas fa-star text-yellow-500"></i> <!-- Filled star -->
-        {% endfor %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for review in reviews %}
+      <div class="bg-white rounded-lg shadow-md border border-primary p-6 mb-4">
+        <p class="text-lg font-semibold text-gray-800">{{ review.user.first_name }} {{ review.user.last_name }}</p>
+        {% if review.rating %}
+        <div class="flex items-center mb-2">
+          <span class="mr-2 text-gray-600">Rating:</span>
+          <!-- Display filled stars based on the rating -->
+          {% for star in review.star_list %}
+          <i class="fas fa-star text-yellow-500"></i> <!-- Filled star -->
+          {% endfor %}
+        </div>
+        {% endif %}
+        <p class="text-gray-700">{{ review.comment }}</p>
+        <p class="text-gray-500 text-sm mt-2">Created at {{ review.created_at }}</p>
       </div>
-      {% endif %}
-      <p class="text-gray-700">{{ review.comment }}</p>
-      <p class="text-gray-500 text-sm mt-2">Created at {{ review.created_at }}</p>
+      {% endfor %}
     </div>
-    {% endfor %}
     {% else %}
     <p class="text-gray-600">No reviews yet.</p>
     {% endif %}

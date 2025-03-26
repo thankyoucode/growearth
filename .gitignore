@@ -14,8 +14,8 @@ local_settings.py
 db.sqlite3-journal
 
 # Sensitive Information
-.env
-*.env
+# .env
+# *.env
 !.env.example
 
 # Media and User-Uploaded Content
@@ -69,3 +69,7 @@ src/package*.json
 
 # local use
 src/src/
+
+# image that are not using directly in website
+src/static/images/categories/
+src/static/images/plants/

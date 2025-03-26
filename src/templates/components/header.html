@@ -165,16 +165,11 @@
     <div class="md:hidden md:h-full">
       <button id="toggleButton" aria-label="Toggle Mobile Navigation" aria-controls="mobileNavLinks"
         aria-expanded="false"
-        class="w-12 h-12 text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110">
-        <!-- Open Icon (fa-bars) -->
-        <i
-          class="fas fa-bars open inset-0 flex items-center justify-center transition-opacity duration-300 ease-in-out"></i>
-        <!-- Close Icon (fa-times) -->
-        <i
-          class="fas fa-times close inset-0 flex items-center justify-center transition-opacity duration-300 ease-in-out invisible"></i>
+        class="w-12 h-12 text-white focus:outline-none rounded-sm transition-transform duration-300 transform hover:scale-110 flex items-center justify-center">
+        <!-- Toggle Icon -->
+        <i class="fas fa-bars transition-opacity duration-300 ease-in-out"></i>
       </button>
     </div>
-
   </nav>
   <!-- Mobile Navigation Overlay -->
   <div id="mobileNavLinks"
@@ -289,38 +284,48 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const toggleButton = document.getElementById('toggleButton');
-    const openIcon = toggleButton.querySelector('.open');
-    const closeIcon = toggleButton.querySelector('.close');
+    const toggleIcon = toggleButton.querySelector('i'); // Select the single icon
     const mobileNavLinks = document.getElementById("mobileNavLinks");
 
+    // Initialize aria-expanded to false
+    toggleButton.setAttribute("aria-expanded", "false");
+
+    // Toggle menu visibility and icon
     toggleButton.addEventListener('click', function () {
-      const expanded = toggleButton.getAttribute("aria-expanded") === "true";
+      const isExpanded = toggleButton.getAttribute("aria-expanded") === "true";
 
-      // Toggle aria-expanded state
-      toggleButton.setAttribute("aria-expanded", !expanded);
+      // Update aria-expanded attribute
+      toggleButton.setAttribute("aria-expanded", !isExpanded);
 
-      // Toggle visibility of the icons using Tailwind visibility classes
-      openIcon.classList.toggle('invisible');  // Toggle open icon visibility
-      closeIcon.classList.toggle('invisible'); // Toggle close icon visibility
+      // Toggle icon class between open and close
+      if (isExpanded) {
+        toggleIcon.classList.remove('fa-times');  // Remove close icon class
+        toggleIcon.classList.add('fa-bars');       // Add open icon class
 
-      // Toggle mobile navigation visibility
-      if (mobileNavLinks.classList.contains("max-h-0")) {
-        mobileNavLinks.classList.remove("max-h-0");
-        mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
-      } else {
+        // Hide mobile navigation
         mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
         mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
+      } else {
+        toggleIcon.classList.remove('fa-bars');    // Remove open icon class
+        toggleIcon.classList.add('fa-times');       // Add close icon class
+
+        // Show mobile navigation
+        mobileNavLinks.classList.remove("max-h-0", "top-[-100%]");
+        mobileNavLinks.classList.add("max-h-screen", "top-[120%]");
       }
     });
 
+    // Close menu when clicking outside
     document.addEventListener('click', function (event) {
       if (!toggleButton.contains(event.target) && !mobileNavLinks.contains(event.target)) {
+        // Reset aria-expanded attribute
         toggleButton.setAttribute("aria-expanded", "false");
 
-        // Reset icons when clicking outside
-        openIcon.classList.add('invisible');
-        closeIcon.classList.remove('invisible');
+        // Reset icon to open state
+        toggleIcon.classList.remove('fa-times');  // Remove close icon class
+        toggleIcon.classList.add('fa-bars');       // Add open icon class
 
+        // Hide mobile navigation
         mobileNavLinks.classList.remove("max-h-screen", "top-[120%]");
         mobileNavLinks.classList.add("max-h-0", "top-[-100%]");
       }

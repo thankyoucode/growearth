@@ -2,7 +2,7 @@
 from django.db.models import Q
 
 # core/views.py
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from apps._utils.message import MessageService
 

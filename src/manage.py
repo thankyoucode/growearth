@@ -22,6 +22,7 @@ def select_settings():
         return os.environ["DJANGO_SETTINGS_MODULE"]
 
     runat = "development"
+    # runat = "production"
 
     env = os.getenv("DJANGO_ENV", runat).lower()
 
