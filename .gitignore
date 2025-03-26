@@ -75,3 +75,4 @@ Thumbs.db
 # ===========================
 src/src/
 src/src/static/  # Corrected typo from 'staitc'
+.vercel

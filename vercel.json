@@ -7,13 +7,6 @@
       "config": {
         "runtime": "python3.12"
       }
-    },
-    {
-      "src": "scripts/build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
     }
   ],
   "rewrites": [
@@ -30,15 +23,10 @@
       "destination": "/src/project/wsgi.py"
     }
   ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'" }
-      ]
-    }
-  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "project.settings.production",
+    "PYTHONUNBUFFERED": "1"
+  },
   "cleanUrls": true,
   "trailingSlash": false
 }
