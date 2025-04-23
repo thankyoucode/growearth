@@ -14,8 +14,6 @@ Grow Earth is designed to help users explore and purchase a wide variety of plan
 
 Watch a full demo walkthrough of Grow Earth here:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BUUw4vENW84?si=Dbhb1hwaKYHobrXF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 [Grow Earth Project Presentation on YouTube](https://youtu.be/BUUw4vENW84?si=jEYaAnbBXCsmjcCv)
 
 ---
