@@ -9,8 +9,7 @@ load_dotenv()
 
 # Security and Core Settings
 SECRET_KEY = os.getenv("SECRET_KEY", "default-very-secret-key")
-# DEBUG = os.getenv("DEBUG", "False") == "True"
-# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+
 # Application Definition
 INSTALLED_APPS = [
     # Django Core
@@ -22,12 +21,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_tailwind_cli",
     "fontawesomefree",
+    "django_countries",
     # Project Apps (Full Python Path)
     "apps.core.apps.CoreConfig",
     "apps.store.apps.StoreConfig",
-    "apps.tags.apps.TagsConfig",
     "apps.accounts.apps.AccountsConfig",
-    "django_countries",
 ]
 
 

@@ -1,13 +1,12 @@
 # this is not best prectice to direct import all `base.py` settings
 # here me some another way to do this same process
 # here is some problem with if using ruff for code formating , this is fine to use
-import os
 
 from .base import *
 
 # Development-specific configurations
 DEBUG = True
-ALLOWED_HOSTS = "localhost,127.0.0.1".split(",")
+ALLOWED_HOSTS = "localhost,127.0.0.1,0.0.0.0,*".split(",")
 
 # Database Configuration
 DATABASES = {
@@ -27,7 +26,6 @@ INSTALLED_APPS += [
 
 MIDDLEWARE += [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "django.middleware.security.SecurityMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 

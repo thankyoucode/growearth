@@ -4,8 +4,8 @@
 .uv/
 .venv/
 uv.lock
-# .env
-# *.env
+.env
+*.env
 !.env.example
 
 # ===========================
@@ -26,6 +26,8 @@ db.sqlite3-journal
 # helping components
 # ===========================
 static/
+docs/
+docs/*
 
 # ===========================
 # Media and Static Files
@@ -33,6 +35,10 @@ static/
 src/static/dist/
 src/static/images/categories/
 src/static/images/plants/
+src/media/
+src/static/videos/plants_in_home.mp4
+src/static/videos/plant_care_video.mp4
+
 
 # ===========================
 # Node Modules and Package Management
@@ -76,3 +82,4 @@ Thumbs.db
 src/src/
 src/src/static/  # Corrected typo from 'staitc'
 .vercel
+src/werkzeug*

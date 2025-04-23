@@ -59,7 +59,3 @@ grow_earth/
 - Use nested template structure
 - Organize static files by type
 - Keep configuration in project root
-
-Citations:
-[1] https://forum.djangoproject.com/t/django-folder-file-structure/32287
-[2] https://django-project-skeleton.readthedocs.io/en/latest/structure.html

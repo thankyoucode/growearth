@@ -5,7 +5,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
-from ....store.models import Category, Plant, Tag  # Adjust the import as necessary
+from ....store.models import Category, Plant, Tag
 
 
 class Command(BaseCommand):

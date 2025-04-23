@@ -19,10 +19,6 @@ def home_view(request):
     return render(request, "core/home.html")
 
 
-def impact_view(request):
-    return render(request, "core/impact.html")
-
-
 def about_view(request):
     return render(request, "core/about.html")
 
@@ -70,10 +66,6 @@ def contact_messages_view(request):
     return render(
         request, "core/contact_messages.html", {"contact_messages": contact_messages}
     )
-
-
-def mission_view(request):
-    return render(request, "core/mission.html")
 
 
 def shipping_view(request):
