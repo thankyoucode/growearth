@@ -10,6 +10,16 @@ Grow Earth is designed to help users explore and purchase a wide variety of plan
 
 ---
 
+## Demo Video
+
+Watch a full demo walkthrough of Grow Earth here:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BUUw4vENW84?si=Dbhb1hwaKYHobrXF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+[Grow Earth Project Presentation on YouTube](https://youtu.be/BUUw4vENW84?si=jEYaAnbBXCsmjcCv)
+
+---
+
 ## Key Features
 
 - **Plant Categories & Listings**  
@@ -67,6 +77,7 @@ source env/bin/activate
 ```
 
 <<<<<<< HEAD
+
 ### 3. Install dependencies
 
 ```bash
@@ -108,13 +119,6 @@ Open your browser and go to:
 
 ---
 
-## Demo Video
-
-Watch a full demo walkthrough of Grow Earth here:  
-[Grow Earth Project Presentation on YouTube]()
-
----
-
 ## About This Project
 
 Grow Earth was created as a learning project to explore Django’s capabilities in building a complete e-commerce application. It demonstrates practical implementations of user authentication, cart management, and order processing, making it a solid foundation for anyone looking to deepen their understanding of web development.
@@ -128,5 +132,7 @@ Thank you for checking out Grow Earth! We hope this project inspires you to cult
 _Happy Planting & Coding!_ 🌿
 
 ---
+
 =======
->>>>>>> origin/main
+
+> > > > > > > origin/main
