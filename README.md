@@ -66,6 +66,7 @@ env\Scripts\activate
 source env/bin/activate
 ```
 
+<<<<<<< HEAD
 ### 3. Install dependencies
 
 ```bash
@@ -127,3 +128,5 @@ Thank you for checking out Grow Earth! We hope this project inspires you to cult
 _Happy Planting & Coding!_ 🌿
 
 ---
+=======
+>>>>>>> origin/main
